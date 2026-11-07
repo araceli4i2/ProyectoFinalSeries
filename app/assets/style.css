@@ -136,6 +136,18 @@ a {
 
 .page-content {
   width: 100%;
+  animation: pageFadeSlide 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Encabezado de página (page_header) */
@@ -167,11 +179,14 @@ a {
   border-radius: 6px;
   margin-bottom: 20px;
   overflow: hidden;
-  transition: border-color 0.15s ease;
+  animation: cardFadeIn 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
 }
 
 .gh-card:hover {
-  border-color: #444c56;
+  transform: translateY(-2px);
+  border-color: #484f58;
+  box-shadow: 0 4px 14px rgba(1, 4, 9, 0.35);
 }
 
 .gh-card-header {
@@ -207,6 +222,39 @@ a {
   flex-direction: column;
   justify-content: space-between;
   min-height: 90px;
+  animation: cardFadeIn 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.gh-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: #484f58;
+  box-shadow: 0 4px 12px rgba(1, 4, 9, 0.35);
+}
+
+/* Retardos escalonados para la aparición de tarjetas y KPIs */
+.kpi-grid .gh-kpi-card:nth-child(1) { animation-delay: 20ms; }
+.kpi-grid .gh-kpi-card:nth-child(2) { animation-delay: 55ms; }
+.kpi-grid .gh-kpi-card:nth-child(3) { animation-delay: 90ms; }
+.kpi-grid .gh-kpi-card:nth-child(4) { animation-delay: 125ms; }
+
+.page-content > .gh-card:nth-of-type(1) { animation-delay: 35ms; }
+.page-content > .gh-card:nth-of-type(2) { animation-delay: 75ms; }
+.page-content > .gh-card:nth-of-type(3) { animation-delay: 115ms; }
+.grid-2col > .gh-card:nth-of-type(1) { animation-delay: 40ms; }
+.grid-2col > .gh-card:nth-of-type(2) { animation-delay: 80ms; }
+.grid-pagerank > .gh-card:nth-of-type(1) { animation-delay: 40ms; }
+.grid-pagerank > .gh-card:nth-of-type(2) { animation-delay: 80ms; }
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .gh-kpi-label {
@@ -346,4 +394,120 @@ a {
 .gh-footer-credit {
   font-weight: 500;
   color: var(--text-primary);
+}
+
+/* Toolbar de Controles para PageRank y Cytoscape */
+.gh-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background-color: #0d1117;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.gh-btn {
+  background-color: #21262d;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.gh-btn:hover {
+  background-color: #30363d;
+  border-color: #8b949e;
+}
+
+.gh-btn-primary {
+  background-color: #238636;
+  border-color: rgba(240, 246, 252, 0.1);
+  color: #ffffff;
+}
+
+.gh-btn-primary:hover {
+  background-color: #2ea043;
+}
+
+.gh-input {
+  background-color: #0d1117;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.gh-input:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.3);
+}
+
+.gh-radio-group label {
+  margin-right: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.gh-radio-group input[type="radio"] {
+  accent-color: var(--accent-green);
+  margin-right: 5px;
+}
+
+/* Estilos para dcc.Loading con estética GitHub Primer */
+.gh-loading {
+  position: relative;
+  min-height: 120px;
+}
+
+.gh-loading .dash-spinner {
+  border-color: rgba(46, 160, 67, 0.2) !important;
+  border-top-color: var(--accent-green) !important;
+}
+
+.gh-loading.dash-loading-holder {
+  background-color: rgba(13, 17, 23, 0.6) !important;
+  backdrop-filter: blur(2px);
+  border-radius: 6px;
+}
+
+/* Accesibilidad: Respetar prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .page-content,
+  .gh-card,
+  .gh-kpi-card {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .gh-card:hover,
+  .gh-kpi-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }

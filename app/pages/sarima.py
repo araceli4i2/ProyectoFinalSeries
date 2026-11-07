@@ -438,15 +438,20 @@ def layout() -> html.Div:
                 title="Serie Temporal de Actividad y Pronóstico Out-of-Sample",
                 subtitle="144 horas de entrenamiento (10 al 15 de marzo) y 24 horas de prueba (16 de marzo de 2026) con intervalo de confianza al 95%",
                 children=[
-                    dcc.Graph(
-                        id="sarima-forecast-graph",
-                        figure=fig_pronostico,
-                        config={
-                            "responsive": True,
-                            "displayModeBar": True,
-                            "displaylogo": False,
-                            "modeBarButtonsToRemove": ["lasso2d", "select2d"],
-                        },
+                    dcc.Loading(
+                        type="circle",
+                        color="#2ea043",
+                        className="gh-loading",
+                        children=dcc.Graph(
+                            id="sarima-forecast-graph",
+                            figure=fig_pronostico,
+                            config={
+                                "responsive": True,
+                                "displayModeBar": True,
+                                "displaylogo": False,
+                                "modeBarButtonsToRemove": ["lasso2d", "select2d"],
+                            },
+                        ),
                     ),
                     # Tarjeta dinámica de inspección horaria al hacer clic
                     html.Div(
@@ -475,10 +480,15 @@ def layout() -> html.Div:
                         title="Residuos del Modelo (119 Horas Evaluadas)",
                         subtitle="Serie temporal de residuos estandarizados en escala logarítmica tras descartar 25h de burn-in",
                         children=[
-                            dcc.Graph(
-                                id="sarima-residuals-graph",
-                                figure=fig_residuos,
-                                config={"responsive": True, "displayModeBar": False},
+                            dcc.Loading(
+                                type="circle",
+                                color="#2ea043",
+                                className="gh-loading",
+                                children=dcc.Graph(
+                                    id="sarima-residuals-graph",
+                                    figure=fig_residuos,
+                                    config={"responsive": True, "displayModeBar": False},
+                                ),
                             )
                         ],
                     ),
@@ -486,10 +496,15 @@ def layout() -> html.Div:
                         title="Autocorrelación Residual (Correlograma ACF)",
                         subtitle=f"Retardos 1 a 36 con banda de ruido blanco ±1.96/√n (±{limite_ruido_blanco:.4f})",
                         children=[
-                            dcc.Graph(
-                                id="sarima-acf-graph",
-                                figure=fig_acf,
-                                config={"responsive": True, "displayModeBar": False},
+                            dcc.Loading(
+                                type="circle",
+                                color="#2ea043",
+                                className="gh-loading",
+                                children=dcc.Graph(
+                                    id="sarima-acf-graph",
+                                    figure=fig_acf,
+                                    config={"responsive": True, "displayModeBar": False},
+                                ),
                             )
                         ],
                     ),

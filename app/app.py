@@ -81,10 +81,21 @@ app.layout = html.Div(
             className="gh-page-container",
             children=[overview.layout()],
         ),
+        # Elemento dummy para disparar la animación clientside de los contadores KPI
+        html.Div(id="kpi-anim-dummy", style={"display": "none"}),
         # Pie de página institucional
         footer(),
     ],
 )
+
+# Validación de layouts para SPA dinámico multi-página
+app.validation_layout = html.Div([
+    app.layout,
+    overview.layout(),
+    markov.layout(),
+    pagerank.layout(),
+    sarima.layout(),
+])
 
 
 @app.callback(
@@ -155,6 +166,22 @@ def render_page(pathname: str) -> Tuple[html.Div, str, str, str, str]:
         content = error_datos_faltantes(mensaje=str(err))
 
     return content, c_overview, c_markov, c_pagerank, c_sarima
+
+
+# Sincronización clientside para animar contadores KPI en cada navegación
+app.clientside_callback(
+    """
+    function(pathname) {
+        if (typeof window.animateKpiCounters === 'function') {
+            setTimeout(window.animateKpiCounters, 60);
+        }
+        return '';
+    }
+    """,
+    Output("kpi-anim-dummy", "children"),
+    Input("url", "pathname"),
+    prevent_initial_call=False,
+)
 
 
 if __name__ == "__main__":

@@ -20,6 +20,7 @@ OVERVIEW_JSON: Path = PROCESSED_DIR / "overview.json"
 MARKOV_JSON: Path = PROCESSED_DIR / "markov.json"
 PAGERANK_JSON: Path = PROCESSED_DIR / "pagerank.json"
 SARIMA_JSON: Path = PROCESSED_DIR / "sarima.json"
+PAGERANK_FLOW_JSON: Path = PROCESSED_DIR / "pagerank_flow.json"
 HOURLY_COUNTS_PARQUET: Path = PROCESSED_DIR / "hourly_counts.parquet"
 
 # Caché en memoria para optimizar la latencia en las vistas de Dash
@@ -63,6 +64,13 @@ def cargar_pagerank() -> Dict[str, Any]:
     if "pagerank" not in _CACHE:
         _CACHE["pagerank"] = _leer_json(PAGERANK_JSON)
     return _CACHE["pagerank"]
+
+
+def cargar_pagerank_flow() -> Dict[str, Any]:
+    """Obtiene la secuencia de transiciones reales y aristas para la animación del flujo."""
+    if "pagerank_flow" not in _CACHE:
+        _CACHE["pagerank_flow"] = _leer_json(PAGERANK_FLOW_JSON)
+    return _CACHE["pagerank_flow"]
 
 
 def cargar_sarima() -> Dict[str, Any]:

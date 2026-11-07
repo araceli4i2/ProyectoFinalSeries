@@ -74,7 +74,11 @@ def kpi_card(
                 style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"},
                 children=elementos_sup
             ),
-            html.Div(value, className="gh-kpi-value"),
+            html.Div(
+                str(value),
+                className="gh-kpi-value",
+                **{"data-kpi-value": str(value)}
+            ),
             html.Div(texto_sub, className="gh-kpi-subtext") if texto_sub else html.Span()
         ]
     )

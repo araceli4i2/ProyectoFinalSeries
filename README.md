@@ -19,9 +19,9 @@ El sistema implementa dos escalas complementarias de análisis:
 ```text
 ProySeriesTiempo/
 ├── app/
-│   ├── assets/              # Hojas de estilo CSS (tema GitHub Primer Dark)
+│   ├── assets/              # Hojas de estilo CSS y animación Canvas GPU (flow_animation.js)
 │   ├── components/          # Componentes reutilizables de UI (tarjetas, KPIs) y tema Plotly
-│   ├── pages/               # Vistas modulares (Overview, Markov, PageRank, SARIMA)
+│   ├── pages/               # Vistas modulares (Overview, Markov, PageRank con Cytoscape, SARIMA)
 │   ├── data.py              # Capa de acceso y caché en memoria a data/processed/
 │   └── app.py               # Servidor Dash SPA y enrutamiento con dcc.Location
 ├── data/
@@ -31,6 +31,7 @@ ProySeriesTiempo/
 │   ├── loader.py            # Descarga concurrente y parseo streaming por zlib
 │   ├── markov.py            # Matriz de transición empírica P y distribución límite π
 │   ├── pagerank.py          # Grafo dirigido y PageRank (Top 15 y Red Top 50)
+│   ├── pagerank_flow.py     # Flujo dinámico y transiciones reales entre repositorios Top 50
 │   ├── sarima.py            # Ajuste SARIMA(1,1,1)(0,1,1)₂₄, pronósticos 24h, residuos y ACF
 │   └── run_all.py           # Pipeline maestro que ejecuta y valida todos los modelos
 ├── notebooks/               # Cuadernos Jupyter de referencia metodológica

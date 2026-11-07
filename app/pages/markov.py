@@ -374,10 +374,15 @@ def layout() -> html.Div:
                         title="Matriz de Transición Empírica P (16 × 16)",
                         subtitle="Celdas cuadradas con tonos de verde estilo GitHub. Haz clic en una celda para analizar esa fila.",
                         children=[
-                            dcc.Graph(
-                                id="markov-heatmap-graph",
-                                figure=fig_heatmap,
-                                config={"displayModeBar": False},
+                            dcc.Loading(
+                                type="circle",
+                                color="#2ea043",
+                                className="gh-loading",
+                                children=dcc.Graph(
+                                    id="markov-heatmap-graph",
+                                    figure=fig_heatmap,
+                                    config={"displayModeBar": False},
+                                ),
                             )
                         ],
                         badge_text="Matriz Estocástica",
@@ -387,10 +392,15 @@ def layout() -> html.Div:
                         title="Distribución Estacionaria π = π P",
                         subtitle="Distribución invariante calculada mediante autovectores normalizados para λ = 1",
                         children=[
-                            dcc.Graph(
-                                id="markov-stationary-graph",
-                                figure=fig_estacionaria,
-                                config={"displayModeBar": False},
+                            dcc.Loading(
+                                type="circle",
+                                color="#2ea043",
+                                className="gh-loading",
+                                children=dcc.Graph(
+                                    id="markov-stationary-graph",
+                                    figure=fig_estacionaria,
+                                    config={"displayModeBar": False},
+                                ),
                             )
                         ],
                         badge_text="Autovector λ = 1",

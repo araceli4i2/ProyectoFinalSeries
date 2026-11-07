@@ -224,10 +224,15 @@ def layout() -> html.Div:
                         title="Distribución por Tipo de Evento (Escala Micro)",
                         subtitle="Frecuencia empírica en la ventana horaria del 10 de marzo de 2026, 12:00 UTC",
                         children=[
-                            dcc.Graph(
-                                id="overview-tipos-graph",
-                                figure=fig_tipos,
-                                config={"displayModeBar": False},
+                            dcc.Loading(
+                                type="circle",
+                                color="#2ea043",
+                                className="gh-loading",
+                                children=dcc.Graph(
+                                    id="overview-tipos-graph",
+                                    figure=fig_tipos,
+                                    config={"displayModeBar": False},
+                                ),
                             )
                         ],
                         badge_text="16 Categorías",
@@ -237,10 +242,15 @@ def layout() -> html.Div:
                         title="Frecuencia Minuto a Minuto (Escala Micro)",
                         subtitle="Ritmo de actividad interna en los 60 minutos de la hora observada",
                         children=[
-                            dcc.Graph(
-                                id="overview-minutos-graph",
-                                figure=fig_minutos,
-                                config={"displayModeBar": False},
+                            dcc.Loading(
+                                type="circle",
+                                color="#2ea043",
+                                className="gh-loading",
+                                children=dcc.Graph(
+                                    id="overview-minutos-graph",
+                                    figure=fig_minutos,
+                                    config={"displayModeBar": False},
+                                ),
                             )
                         ],
                         badge_text="12:00 - 13:00 UTC",
@@ -253,10 +263,15 @@ def layout() -> html.Div:
                 title="Volumen Horario de la Semana Completa (Escala Macro)",
                 subtitle="Serie temporal continua de 168 horas (10 al 16 de marzo de 2026)",
                 children=[
-                    dcc.Graph(
-                        id="overview-macro-graph",
-                        figure=fig_semanal,
-                        config={"displayModeBar": False},
+                    dcc.Loading(
+                        type="circle",
+                        color="#2ea043",
+                        className="gh-loading",
+                        children=dcc.Graph(
+                            id="overview-macro-graph",
+                            figure=fig_semanal,
+                            config={"displayModeBar": False},
+                        ),
                     )
                 ],
                 badge_text="168 Horas",
