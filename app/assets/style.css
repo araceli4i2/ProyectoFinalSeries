@@ -1,0 +1,349 @@
+/* ==========================================================================
+   GITHUB PRIMER DESIGN SYSTEM (Modo Oscuro) - UMSA DAT-262 DASHBOARD
+   ========================================================================== */
+
+:root {
+  /* Paleta oficial GitHub Primer Dark */
+  --bg-canvas: #0d1117;
+  --bg-card: #161b22;
+  --bg-card-header: rgba(1, 4, 9, 0.4);
+  --border-color: #30363d;
+  --border-muted: #21262d;
+  
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  
+  /* Acentos oficiales */
+  --accent-green: #238636;
+  --accent-green-hover: #2ea043;
+  --accent-purple: #8957e5;
+  --accent-orange: #f78166;
+  --accent-blue: #58a6ff;
+  
+  /* Tipografía */
+  --font-sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+/* Tipografía mono para datos, probabilidades y repos */
+.font-mono, .repo-name, .kpi-value, .prob-value {
+  font-family: var(--font-mono);
+}
+
+/* Header superior simple */
+.gh-header {
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gh-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gh-header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.gh-header-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.gh-header-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Navegación: GitHub Underline Nav */
+.gh-underline-nav, .underline-nav {
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gh-nav-tab, .underline-nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gh-nav-tab:hover, .underline-nav-item:hover {
+  color: var(--text-primary) !important;
+  border-bottom-color: var(--border-color);
+  text-decoration: none !important;
+}
+
+.gh-nav-tab.active, .underline-nav-item.active {
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  border-bottom: 2px solid var(--accent-orange) !important;
+  text-decoration: none !important;
+}
+
+/* Contenedor principal de la página */
+.gh-page-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.page-content {
+  width: 100%;
+}
+
+/* Encabezado de página (page_header) */
+.page-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-muted);
+  padding-bottom: 16px;
+}
+
+.page-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-header-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Tarjeta genérica (card) */
+.gh-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.gh-card:hover {
+  border-color: #444c56;
+}
+
+.gh-card-header {
+  padding: 12px 16px;
+  background-color: var(--bg-card-header);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gh-card-body {
+  padding: 16px;
+}
+
+/* Tarjeta KPI (kpi_card) */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.gh-kpi-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 90px;
+}
+
+.gh-kpi-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.gh-kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.gh-kpi-subtext {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Badges */
+.gh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.gh-badge-green {
+  color: #3fb950;
+  background-color: rgba(35, 134, 54, 0.2);
+  border-color: var(--accent-green);
+}
+
+.gh-badge-purple {
+  color: #bc8cff;
+  background-color: rgba(137, 87, 229, 0.2);
+  border-color: var(--accent-purple);
+}
+
+.gh-badge-blue {
+  color: var(--accent-blue);
+  background-color: rgba(88, 166, 255, 0.2);
+  border-color: var(--accent-blue);
+}
+
+.gh-badge-orange {
+  color: var(--accent-orange);
+  background-color: rgba(247, 129, 102, 0.2);
+  border-color: var(--accent-orange);
+}
+
+/* Placeholder Box para gráficos de la Fase 3 */
+.gh-placeholder-chart {
+  background-color: #0d1117;
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 280px;
+}
+
+.gh-placeholder-icon {
+  font-size: 32px;
+  opacity: 0.7;
+}
+
+.gh-placeholder-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.gh-placeholder-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* Grid de dos columnas */
+.grid-2col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  gap: 20px;
+}
+
+/* Grid específico para PageRank: Red y Tabla Top 15 */
+.grid-pagerank {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid-pagerank {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+  .gh-underline-nav {
+    overflow-x: auto;
+  }
+}
+
+/* Footer con crédito institucional */
+.gh-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: auto;
+}
+
+.gh-footer-credit {
+  font-weight: 500;
+  color: var(--text-primary);
+}

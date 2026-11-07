@@ -1,0 +1,9 @@
+dash==4.5.0
+plotly==7.1.0
+pandas==3.1.1
+numpy==2.5.4
+networkx==3.7
+statsmodels==0.15.0
+scipy==1.18.1
+requests==2.34.2
+pyarrow==26.0.1

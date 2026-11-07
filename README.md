@@ -1,144 +1,115 @@
-# UMSA DAT-262 | GH Archive Stochastic Analytical Dashboard
-**Aplicación de Cadenas de Markov y Modelos ARIMA sobre datos de GitHub (GH Archive)**
+# Dashboard Estocástico de Actividad en GitHub (GH Archive)
 
-> **Materia:** DAT-262: Procesos Estocásticos y Análisis de Series de Tiempo  
-> **Institución:** Universidad Mayor de San Andrés (UMSA) — Carrera de Informática  
-> **Estudiantes:** Yeral Ariel Gutierrez Quispe & Raquel Araceli Serrano Mamani  
-> **Docente:** M.Sc. Mario Amílcar Miranda Gonzales  
-> **Muestra de Investigación:** 15 de Enero de 2024, 12:00 a 12:59 UTC (286,864 eventos en `2024-01-15-12.json`) y Serie Diaria de Enero de 2024 (31 días).
+Dashboard analítico interactivo desarrollado con **Python**, **Dash** y **Plotly** para el modelado estocástico y de series temporales sobre eventos públicos globales de GitHub recopilados por [GH Archive](https://www.gharchive.org/).
 
----
-
-## 🎨 Características de Diseño y UI (GitHub Primer Dark Theme)
-
-El dashboard implementa fielmente el sistema de diseño **GitHub Dark Primer**:
-- **Canvas Principal:** `#0d1117`
-- **Superficie de Tarjetas:** `#161b22`
-- **Bordes y Delimitadores:** `#30363d` (1px solid, border-radius: 6px)
-- **Acentos Oficiales:** Azul GitHub (`#58a6ff`), Verde Push/Success (`#238636` / `#3fb950`), Morado Markov/PR (`#8957e5`), Naranja ARIMA/Alerta (`#d29922`), Rojo Delete/Bots (`#f85149`).
-- **Tipografía Dual:** Inter para UI general y `JetBrains Mono` / `Fira Code` para probabilidades, métricas, hashes, ramas Git y ecuaciones matemáticas.
-- **Renderizado de Fórmulas:** Integración nativa con **KaTeX** para visualización rigurosa de ecuaciones estocásticas.
+El sistema implementa dos escalas complementarias de análisis:
+1. **Modelado Estocástico y de Redes (Escala Micro)**:
+   - Cadenas de Markov de primer orden sobre transiciones entre tipos de eventos de desarrolladores.
+   - Algoritmo PageRank ($\alpha=0.85$) sobre el grafo dirigido ponderado de navegación entre repositorios.
+   - Ventana temporal: **10 de marzo de 2026, 12:00 UTC** (`micro_events.parquet`).
+2. **Modelado de Series Temporales (Escala Macro)**:
+   - Serie horaria continua de 168 horas (**7 días completos**, del 10 al 16 de marzo de 2026).
+   - Metodología Box-Jenkins con transformación logarítmica y ajuste **SARIMA(1,1,1)(0,1,1)₂₄** con deriva.
+   - Pronóstico out-of-sample para las últimas 24 horas e intervalos de confianza al 95%.
 
 ---
 
-## 📊 Arquitectura de las 5 Vistas Analíticas
+## Estructura del Proyecto
 
-### 1. Overview & Actividad Horaria (Exploración General)
-- **6 KPI Cards:**
-  1. Total Eventos: `286,864` (869.76 MB en `2024-01-15-12.json`)
-  2. Usuarios Únicos: `57,308` (`actor_id`)
-  3. Repositorios Únicos: `100,525` (`repo_id`)
-  4. Espacio de Estados: `15` tipos de evento
-  5. Frecuencia Promedio: `4,781.1` eventos/minuto (Pico: `5,310` a las 12:35 UTC)
-  6. Automatización: `github-actions[bot]` genera `64,298` eventos (`22.4%` del total)
-- **Gráfico de Serie Temporal (60 minutos):** Frecuencia minuto a minuto interactiva con filtros por tipo de evento y media móvil de 5 minutos.
-- **Distribución de Estados:** Gráfico de barras horizontales de los 15 tipos de evento (`PushEvent` 69.8%, `CreateEvent` 9.2%, `PullRequestEvent` 5.5%, `IssueCommentEvent` 3.5%, `WatchEvent` 3.0%, etc.).
-- **Ranking de Actores:** Clasificación diferenciada entre bots automatizados y desarrolladores humanos con búsqueda y filtros rápidos.
-
-### 2. Capítulo 3 (Enfoque A) — Cadenas de Markov de Tipos de Eventos
-- **Fórmulas Teóricas:**
-  - Propiedad de Markov: $P(X_{n+1}=j \mid X_n=i) = p_{ij}$
-  - Distribución Estacionaria: $\boldsymbol{\pi} = \boldsymbol{\pi} \mathbf{P}$
-  - Tiempo Medio de Retorno: $\mu_j = 1/\pi_j$
-- **Mapa de Calor Interactivo (Heatmap):** Matriz estocástica $15 \times 15$ con conmutador a Top 8 estados, tooltips con probabilidades condicionales exactas e interruptor para **destacar el efecto racha** ($p_{ii} > \pi_i$).
-  - *Hallazgo clave:* Detección de rachas y loops de automatización en `PushEvent -> PushEvent`, `CreateEvent -> CreateEvent` y respuestas instantáneas en incidencias.
-- **Simulador Interactivo Chapman-Kolmogorov ($P^n$):** Permite elegir cualquier estado inicial $X_0$, controlar el número de pasos $n \in [1, 20]$ y observar la rápida convergencia hacia $\boldsymbol{\pi}$ con cálculo en tiempo real de la Distancia de Variación Total $D_{TV}(P^n, \boldsymbol{\pi}) \to 0$.
-
-### 3. Capítulo 3 (Enfoque B) — PageRank sobre Red de Repositorios
-- **Matriz de Google:** $G = \alpha H + (1-\alpha)\frac{1}{n}J$ con factor de amortiguamiento $\alpha = 0.85$.
-- **Topología de la Red:** Repositorios analizados sobre 286,864 interacciones de GitHub.
-- **Grafo Interactivo (Canvas HTML5):** Simulación dinámica con partículas de navegante aleatorio y control deslizante para ajustar $\alpha$ en tiempo real (de 0.50 a 0.99).
-- **Tabla GitHub Trending:** Top repositorios por PageRank liderados por proyectos de testing, kernels de desarrollo y repositorios de alto flujo de commits.
-
-### 4. Exploración Extendida de Payload & Organizaciones
-- **Donut Ratio:** Cuentas Personales (`223,502` — 77.9%) vs Organizaciones (`63,362` — 22.1%).
-- **Top Organizaciones:** Ranking de entidades corporativas y comunidades de código abierto extraídas directamente de `org.login`.
-- **Acciones en Payload:** Distribución de `payload.action` (`created`, `opened`, `started`, `closed`, `merged`, `labeled`).
-- **Ramas Git Destino:** Predominancia de `refs/heads/main` y `refs/heads/master`.
-- **Profundidad de Discusión:** Comentarios por incidencia y desglose de acciones en Pull Requests.
-
-### 5. Capítulo 6 — Modelos SARIMA (Metodología Box-Jenkins)
-Implementación integral y rigurosa del protocolo clásico de Box-Jenkins para series de tiempo con componente estacional semanal ($s=7$), basada en la pipeline metodológica de `DAT262_Proyecto_SARIMA_Diario_Corregido.ipynb`:
-
-- **Flujo de Datos Arquitectónico:**
-  `scripts/export_sarima.py` $\longrightarrow$ `data/sarima_results.json` $\longrightarrow$ `js/views/sarima.js` (fetch dinámico en el cliente).
-- **Etapa 1: Identificación**
-  - **Serie Temporal Interactiva:** Vista en escala natural o logarítmica con demarcación visual de partición train/test ($H=14$ días), crosshair interactivo con día de la semana y zoom de rango.
-  - **Descomposición STL Sincronizada:** Paneles coordinados de Tendencia ($T_t$), Estacionalidad ($S_t$) y Residuo ($R_t$). Gauge de Fuerza Estacional $F_s = \max(0, 1 - \frac{\mathrm{Var}(R)}{\mathrm{Var}(S+R)})$ con umbral crítico $0.64$ ($D=1$).
-  - **Perfil Semanal:** Desglose del factor de estacionalidad por día (Lunes a Domingo) resaltando fines de semana.
-  - **Pipeline de Estacionariedad:** Selector multi-etapa (Niveles log $\to$ Dif. estacional $\to$ Dif. estacional + regular) con pruebas formales ADF y KPSS en paralelo.
-  - **Correlogramas Gemelos (ACF / PACF a 35 rezagos):** Bandas de Bartlett $\pm 1.96/\sqrt{N}$, con resaltado estacional en rezagos $7, 14, 21, 28, 35$ y líneas punteadas de referencia.
-- **Etapa 2: Estimación**
-  - **Explorador de Grilla (72 modelos):** Combinaciones $(p,d,q) \times (P,D,Q)_s$ con tendencia $c$ o $n$. Tabla ordenable con filtros por convergencia, warnings, tendencia y diagnóstico.
-  - **Mapa de Calor AIC:** Matriz bidimensional $(p,q)$ parametrizable por $(P,Q)$ y tendencia con marcado del mínimo global.
-  - **Inspección de Candidatos:** Clic en cualquiera de los Top 10 modelos recalcula y actualiza instantáneamente los paneles de diagnóstico y pronóstico.
-- **Etapa 3: Diagnóstico Iterativo**
-  - **Verificación de Residuos:** Descarte de los primeros $d + D \cdot s$ residuos de inicialización (`burn`).
-  - **Panel 2×2 de Residuos:** Serie en el tiempo, ACF de residuos, histograma con curva normal teórica y gráfico Q-Q normal con recta identidad.
-  - **Tarjetas de Pruebas Formales:** Ljung-Box en rezagos 14 y 21 con grados de libertad corregidos $gl = m - (p+q+P+Q)$, prueba Jarque-Bera de normalidad y prueba de heterocedasticidad.
-  - **Detección de Sobrediferenciación:** Alerta automática si algún coeficiente $\Theta_Q$ o $\theta_q$ se acerca a las raíces unitarias ($< -0.95$).
-- **Etapa 4: Pronóstico y Validación**
-  - **Gráfico de Validación Out-of-Sample:** Trayectoria observada vs pronóstico SARIMA con banda de Intervalo de Predicción al 95% y benchmark Naive Estacional ($y_{t-7}$).
-  - **Evaluación de Errores & Métricas:** MAE, RMSE, MAPE y MASE (referenciado al error in-sample del naive estacional), con indicador de cobertura empírica de la banda de predicción.
-  - **Proyección Futura:** Horizonte interactivo $h \in [1, 14]$ días con tabla detallada de valores esperados e intervalos.
-  - **Importador de Datos Externos:** Soporte para CSV y JSON con cálculo en cliente de transformaciones, diferenciaciones y ACF/PACF, junto con instrucciones para reestimación completa en Python.
+```text
+ProySeriesTiempo/
+├── app/
+│   ├── assets/              # Hojas de estilo CSS (tema GitHub Primer Dark)
+│   ├── components/          # Componentes reutilizables de UI (tarjetas, KPIs) y tema Plotly
+│   ├── pages/               # Vistas modulares (Overview, Markov, PageRank, SARIMA)
+│   ├── data.py              # Capa de acceso y caché en memoria a data/processed/
+│   └── app.py               # Servidor Dash SPA y enrutamiento con dcc.Location
+├── data/
+│   ├── raw/                 # Archivos horarios de GH Archive (.json.gz)
+│   └── processed/           # Archivos Parquet y JSON precalculados (consumo pasivo)
+├── engine/
+│   ├── loader.py            # Descarga concurrente y parseo streaming por zlib
+│   ├── markov.py            # Matriz de transición empírica P y distribución límite π
+│   ├── pagerank.py          # Grafo dirigido y PageRank (Top 15 y Red Top 50)
+│   ├── sarima.py            # Ajuste SARIMA(1,1,1)(0,1,1)₂₄, pronósticos 24h, residuos y ACF
+│   └── run_all.py           # Pipeline maestro que ejecuta y valida todos los modelos
+├── notebooks/               # Cuadernos Jupyter de referencia metodológica
+├── PROJECT_CONTEXT.md       # Reglas de arquitectura, desacoplamiento y reproducibilidad
+├── README.md                # Documentación del proyecto
+└── requirements.txt         # Dependencias fijadas con versiones exactas
+```
 
 ---
 
-## 🔬 Cómo Regenerar los Resultados SARIMA
+## Requisitos e Instalación
 
-Para reentrenar la grilla Box-Jenkins y reexportar los datos estructurados a `data/sarima_results.json`, utiliza el pipeline en `scripts/export_sarima.py`:
+### 1. Requisitos Previos
+- **Python**: Versión 3.10 o superior (compatible con Python 3.14).
+- Sistema Operativo: Windows, macOS o Linux.
 
-### Requisitos previos (Python 3.9+)
-```bash
-pip install pandas numpy statsmodels scikit-learn scipy requests
+### 2. Configuración del Entorno Virtual
+
+En Windows (PowerShell):
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-### Ejecución estándar (genera 120 días con simulación realista de estacionalidad semanal):
+En Linux / macOS:
 ```bash
-python scripts/export_sarima.py
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-### Reestimación con archivo CSV propio o fechas específicas:
+### 3. Instalación de Dependencias
 ```bash
-python scripts/export_sarima.py --csv sample_gh_archive_january2024.csv --start 2024-01-01 --end 2024-04-30
+pip install -r requirements.txt
 ```
-
-### Opciones de la línea de comandos:
-- `--csv <ruta>`: Ruta a un archivo CSV con columnas `date,events` (o `timestamp,count`).
-- `--source {gharchive,simulated}`: Fuerza el origen de datos en los metadatos exportados.
-- `--start <YYYY-MM-DD>`: Fecha de inicio de la serie temporal diaria.
-- `--end <YYYY-MM-DD>`: Fecha de fin de la serie temporal diaria.
-- `--h <int>`: Horizonte de predicción y tamaño del conjunto de test (por defecto: 14 días).
-- `--alpha <float>`: Nivel de significancia para los intervalos de predicción (por defecto: 0.05 para 95% de confianza).
-- `--output <ruta>`: Ruta de destino (por defecto: `data/sarima_results.json`).
 
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto Localmente
+## Orden de Ejecución del Proyecto
 
-El proyecto es 100% modular, ligero y no requiere dependencias pesadas de `npm`:
-
-### Opción 1: Con Python (Recomendado)
-Ejecuta el script incluido que levantará el servidor HTTP y abrirá automáticamente tu navegador en `http://localhost:8080`:
+El flujo completo se ejecuta de forma secuencial mediante tres comandos en la terminal:
 
 ```bash
-python start_dashboard.py
+# Paso 1: Descarga y extracción concurrente de datos (Fase 1)
+python -m engine.loader --micro --macro
+
+# Paso 2: Ejecución del motor analítico y generación de resultados (Fase 2)
+python -m engine.run_all
+
+# Paso 3: Lanzamiento del servidor web del dashboard (Fases 3 y 4)
+python -m app.app
 ```
 
-O directamente mediante el módulo estándar:
-```bash
-python -m http.server 8080
+Una vez iniciado el servidor, abre en tu navegador:
 ```
-Y abre [http://localhost:8080](http://localhost:8080) en Google Chrome o Microsoft Edge.
+http://127.0.0.1:8050/
+```
 
 ---
 
-## 👥 Créditos del Proyecto
-- **Materia:** DAT-262: Procesos Estocásticos y Análisis de Series de Tiempo
-- **Carrera de Informática** — Universidad Mayor de San Andrés (UMSA)
-- **Autores:**
-  - Yeral Ariel Gutierrez Quispe
-  - Raquel Araceli Serrano Mamani
-- **Docente Revisor:**
-  - M.Sc. Mario Amílcar Miranda Gonzales
+## Pesos de Directorios y Política de Regeneración
+
+El diseño del proyecto aplica el **principio de consumo pasivo**: la aplicación web (`app/`) lee exclusivamente los archivos procesados en `data/processed/`, garantizando que la navegación y los callbacks respondan en milisegundos sin recalcular modelos pesados en runtime.
+
+| Directorio | Peso Aproximado | Cantidad de Archivos | ¿Se puede regenerar? | Procedimiento de Regeneración |
+| :--- | :--- | :--- | :--- | :--- |
+| **`data/raw/`** | ~5,540 MB (5.4 GB) | 169 archivos `.json.gz` | **Sí** | Se descargan directamente desde GH Archive ejecutando `python -m engine.loader --micro --macro`. Si ya existen, el descargador los omite automáticamente. |
+| **`data/processed/`** | ~4.6 MB | 11 archivos (Parquet y JSON) | **Sí** | Se regenera en dos pasos: los Parquet mediante `python -m engine.loader --micro --macro`, y los JSON analíticos mediante `python -m engine.run_all`. |
+| **`notebooks/`** | ~4.5 MB | 3 archivos (`.ipynb`) | **No (estático)** | Cuadernos originales de referencia metodológica (DAT-262). Sirven como benchmark analítico para validar los resultados de `engine/`. |
+| **`engine/`** | ~0.13 MB | 12 archivos (`.py`) | **No (código)** | Código fuente modular del motor de datos y modelado estocástico. |
+| **`app/`** | ~0.20 MB | 27 archivos (`.py`, `.css`) | **No (código)** | Código fuente del dashboard Dash, sistema de diseño GitHub Primer y hojas de estilo. |
+
+---
+
+## Notas Metodológicas y Reproducibilidad
+
+> [!NOTE]
+> **Sensibilidad numérica y reproducibilidad de SARIMA:**
+> En el modelo SARIMA(1,1,1)(0,1,1)₂₄, los parámetros de medias móviles ($\theta_1 \approx -0.98$ y $\Theta_{24} \approx -0.95$) se ubican muy cerca de la frontera de invertibilidad. Debido a la superficie de verosimilitud casi plana y las diferencias de convergencia numérica entre optimizadores de `statsmodels` y `scipy`, la métrica MASE puede presentar una variación en el tercer decimal (~1.383 vs ~1.389). Ambos ajustes comparten estimaciones consistentes, validan la hipótesis de ruido blanco en el test de Ljung-Box ($p > 0.05$) y producen intervalos de predicción out-of-sample equivalentes.
+
+> [!NOTE]
+> **Grafo dirigido de PageRank:**
+> El grafo de 36,281 nodos y 41,902 aristas se construye a partir de transiciones consecutivas entre proyectos distintos para usuarios que trabajaron en dos o más repositorios en esa hora. Por ello, solo participan repositorios con al menos una transición secuencial; los repositorios restantes con actividad aislada de usuarios que interactuaron con un solo proyecto no generan aristas en este espacio de transición.

@@ -1,29 +1,35 @@
 # ==============================================================================
-# Git Ignore - UMSA DAT-262 Dashboard Estocástico
+# Git Ignore - Dashboard GH Archive
 # ==============================================================================
 
-# Datasets pesados de GitHub Archive (exceden el límite de 100 MB de GitHub)
-2024-*.json
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Datasets y archivos pesados
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 *.json.gz
 *.gz
 *.zip
 *.tar
+*.parquet
 
-# Archivos de caché de Python
+# Caché de Python
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 
-# Entornos virtuales
-venv/
-env/
-.venv/
-
-# Archivos temporales del sistema operativo e IDEs
+# Archivos temporales de sistema e IDEs
 .DS_Store
 Thumbs.db
 *.tmp
 *.log
 .vscode/
 .idea/
+
