@@ -1,0 +1,5 @@
+DAT-262 Cap. 6 — SARIMA sobre eventos por hora de GH Archive (7 días)
+metricas.json            : todos los resultados numéricos (datos, pruebas ADF/KPSS, modelo, diagnóstico, pronóstico)
+figuras/                 : imágenes PNG de cada etapa (01_ ... 07_)
+tablas/                  : serie horaria, grilla completa, comparación de pronósticos, resumen del modelo final
+modelo_sarima.pkl        : modelo final (statsmodels: SARIMAXResults.load)

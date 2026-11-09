@@ -1,7 +1,8 @@
-"""Módulo de acceso y lectura pasiva a los datos precalculados en data/processed/.
+"""Módulo legado de acceso a los datos precalculados en data/processed/.
 
-Garantiza que la aplicación web Dash consuma exclusivamente archivos JSON/Parquet
-previamente generados por el motor analítico, sin realizar recálculos en runtime.
+Esta capa pertenece a la aplicación Dash anterior. La entrega final es la
+interfaz estática en interface/index.html, que consume resultados_capitulo3/
+y resultados_capitulo6/ sin recalcular modelos en runtime.
 """
 
 from typing import Dict, Any, Optional
@@ -39,7 +40,8 @@ def _leer_json(ruta: Path) -> Dict[str, Any]:
     if not ruta.exists():
         raise FileNotFoundError(
             f"No se encontró el archivo requerido: data/processed/{ruta.name}. "
-            "Para generarlo, ejecuta: 'python -m engine.loader --micro --macro' y luego 'python -m engine.run_all'."
+            "Esta aplicación Dash es legado y no forma parte de la entrega final. "
+            "Consulta interface/index.html, resultados_capitulo3/ y resultados_capitulo6/."
         )
     with open(ruta, "r", encoding="utf-8") as f:
         return json.load(f)
@@ -86,7 +88,8 @@ def cargar_hourly_counts() -> pd.DataFrame:
         if not HOURLY_COUNTS_PARQUET.exists():
             raise FileNotFoundError(
                 f"No se encontró el archivo requerido: data/processed/{HOURLY_COUNTS_PARQUET.name}. "
-                "Para generarlo, ejecuta: 'python -m engine.loader --micro --macro' y luego 'python -m engine.run_all'."
+                "Esta aplicación Dash es legado y no forma parte de la entrega final. "
+                "Consulta interface/index.html, resultados_capitulo3/ y resultados_capitulo6/."
             )
         _CACHE["hourly_counts"] = pd.read_parquet(HOURLY_COUNTS_PARQUET)
     return _CACHE["hourly_counts"]

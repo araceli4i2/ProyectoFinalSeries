@@ -238,15 +238,15 @@ def error_datos_faltantes(
                         style={"display": "flex", "alignItems": "center", "gap": "10px", "marginBottom": "12px"},
                         children=[
                             html.Span("⚠️", style={"fontSize": "22px"}),
-                            html.H3("Datos Procesados No Disponibles", style={"color": "#f85149", "margin": "0", "fontSize": "18px"}),
+                            html.H3("Vista Dash legado", style={"color": "#f85149", "margin": "0", "fontSize": "18px"}),
                         ],
                     ),
                     html.P(
-                        mensaje or "No se encontraron los archivos procesados requeridos en data/processed/ para renderizar esta vista.",
+                        mensaje or "Esta vista pertenece a la aplicación Dash anterior. La entrega final es la interfaz estática en interface/index.html.",
                         style={"color": "#e6edf3", "fontSize": "13.5px", "lineHeight": "1.5"},
                     ),
                     html.P(
-                        "Para generar los datos y cálculos del dashboard, ejecuta en orden los siguientes comandos en tu terminal:",
+                        "La interfaz final no necesita servidor. Para regenerar los resultados del Capítulo 3:",
                         style={"color": "#8b949e", "fontSize": "13px", "marginBottom": "12px"},
                     ),
                     html.Div(
@@ -260,10 +260,10 @@ def error_datos_faltantes(
                             "marginBottom": "16px",
                         },
                         children=[
-                            html.Div("# 1. Extracción y conteo continuo de GH Archive (Fase 1):", style={"color": "#8b949e", "marginBottom": "4px"}),
-                            html.Div("python -m engine.loader --micro --macro", style={"color": "#3fb950", "fontWeight": "600", "marginBottom": "12px"}),
-                            html.Div("# 2. Ajuste de modelos (Markov, PageRank, SARIMA) (Fase 2):", style={"color": "#8b949e", "marginBottom": "4px"}),
-                            html.Div("python -m engine.run_all", style={"color": "#3fb950", "fontWeight": "600"}),
+                            html.Div("# Interfaz final (sin servidor):", style={"color": "#8b949e", "marginBottom": "4px"}),
+                            html.Div("interface/index.html", style={"color": "#3fb950", "fontWeight": "600", "marginBottom": "12px"}),
+                            html.Div("# Regenerar resultados del Capítulo 3:", style={"color": "#8b949e", "marginBottom": "4px"}),
+                            html.Div("python tools/capitulo3/run_capitulo3.py", style={"color": "#3fb950", "fontWeight": "600"}),
                         ],
                     ),
                     html.Div(

@@ -1,0 +1,842 @@
+[
+ {
+  "hora_utc": "2026-03-10 00:00:00",
+  "eventos": 155309,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 01:00:00",
+  "eventos": 162551,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 02:00:00",
+  "eventos": 161618,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 03:00:00",
+  "eventos": 152152,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 04:00:00",
+  "eventos": 154881,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 05:00:00",
+  "eventos": 157586,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 06:00:00",
+  "eventos": 152014,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 07:00:00",
+  "eventos": 155510,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 08:00:00",
+  "eventos": 156658,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 09:00:00",
+  "eventos": 156267,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 10:00:00",
+  "eventos": 152813,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 11:00:00",
+  "eventos": 156905,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 12:00:00",
+  "eventos": 161817,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 13:00:00",
+  "eventos": 165207,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 14:00:00",
+  "eventos": 161018,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 15:00:00",
+  "eventos": 154110,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 16:00:00",
+  "eventos": 155030,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 17:00:00",
+  "eventos": 155179,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 18:00:00",
+  "eventos": 155254,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 19:00:00",
+  "eventos": 157871,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 20:00:00",
+  "eventos": 151508,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 21:00:00",
+  "eventos": 156321,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 22:00:00",
+  "eventos": 154095,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-10 23:00:00",
+  "eventos": 150057,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 00:00:00",
+  "eventos": 149116,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 01:00:00",
+  "eventos": 157655,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 02:00:00",
+  "eventos": 159501,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 03:00:00",
+  "eventos": 152332,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 04:00:00",
+  "eventos": 156185,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 05:00:00",
+  "eventos": 157364,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 06:00:00",
+  "eventos": 151105,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 07:00:00",
+  "eventos": 155422,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 08:00:00",
+  "eventos": 155311,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 09:00:00",
+  "eventos": 154345,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 10:00:00",
+  "eventos": 155720,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 11:00:00",
+  "eventos": 152302,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 12:00:00",
+  "eventos": 162788,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 13:00:00",
+  "eventos": 163812,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 14:00:00",
+  "eventos": 155925,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 15:00:00",
+  "eventos": 157644,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 16:00:00",
+  "eventos": 160779,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 17:00:00",
+  "eventos": 158896,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 18:00:00",
+  "eventos": 156312,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 19:00:00",
+  "eventos": 151963,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 20:00:00",
+  "eventos": 155065,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 21:00:00",
+  "eventos": 151980,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 22:00:00",
+  "eventos": 148852,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-11 23:00:00",
+  "eventos": 145266,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 00:00:00",
+  "eventos": 151396,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 01:00:00",
+  "eventos": 144208,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 02:00:00",
+  "eventos": 152625,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 03:00:00",
+  "eventos": 148636,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 04:00:00",
+  "eventos": 151304,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 05:00:00",
+  "eventos": 147940,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 06:00:00",
+  "eventos": 148719,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 07:00:00",
+  "eventos": 149400,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 08:00:00",
+  "eventos": 145290,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 09:00:00",
+  "eventos": 155154,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 10:00:00",
+  "eventos": 154908,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 11:00:00",
+  "eventos": 152700,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 12:00:00",
+  "eventos": 160222,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 13:00:00",
+  "eventos": 153515,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 14:00:00",
+  "eventos": 154455,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 15:00:00",
+  "eventos": 147878,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 16:00:00",
+  "eventos": 150717,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 17:00:00",
+  "eventos": 154248,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 18:00:00",
+  "eventos": 150486,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 19:00:00",
+  "eventos": 155076,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 20:00:00",
+  "eventos": 157211,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 21:00:00",
+  "eventos": 153361,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 22:00:00",
+  "eventos": 147734,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-12 23:00:00",
+  "eventos": 146797,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 00:00:00",
+  "eventos": 147949,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 01:00:00",
+  "eventos": 154703,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 02:00:00",
+  "eventos": 155050,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 03:00:00",
+  "eventos": 144009,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 04:00:00",
+  "eventos": 141955,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 05:00:00",
+  "eventos": 147692,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 06:00:00",
+  "eventos": 149555,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 07:00:00",
+  "eventos": 151736,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 08:00:00",
+  "eventos": 148580,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 09:00:00",
+  "eventos": 154794,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 10:00:00",
+  "eventos": 156647,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 11:00:00",
+  "eventos": 151142,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 12:00:00",
+  "eventos": 158763,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 13:00:00",
+  "eventos": 158938,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 14:00:00",
+  "eventos": 155089,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 15:00:00",
+  "eventos": 159452,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 16:00:00",
+  "eventos": 161362,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 17:00:00",
+  "eventos": 157046,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 18:00:00",
+  "eventos": 154979,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 19:00:00",
+  "eventos": 148953,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 20:00:00",
+  "eventos": 151631,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 21:00:00",
+  "eventos": 150543,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 22:00:00",
+  "eventos": 149805,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-13 23:00:00",
+  "eventos": 146035,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 00:00:00",
+  "eventos": 147847,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 01:00:00",
+  "eventos": 158321,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 02:00:00",
+  "eventos": 153733,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 03:00:00",
+  "eventos": 149678,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 04:00:00",
+  "eventos": 148429,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 05:00:00",
+  "eventos": 149674,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 06:00:00",
+  "eventos": 149140,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 07:00:00",
+  "eventos": 148271,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 08:00:00",
+  "eventos": 151958,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 09:00:00",
+  "eventos": 147021,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 10:00:00",
+  "eventos": 160065,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 11:00:00",
+  "eventos": 152253,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 12:00:00",
+  "eventos": 159698,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 13:00:00",
+  "eventos": 161588,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 14:00:00",
+  "eventos": 159872,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 15:00:00",
+  "eventos": 157157,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 16:00:00",
+  "eventos": 160298,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 17:00:00",
+  "eventos": 161683,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 18:00:00",
+  "eventos": 160430,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 19:00:00",
+  "eventos": 156106,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 20:00:00",
+  "eventos": 155014,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 21:00:00",
+  "eventos": 155442,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 22:00:00",
+  "eventos": 151744,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-14 23:00:00",
+  "eventos": 151623,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 00:00:00",
+  "eventos": 150403,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 01:00:00",
+  "eventos": 149200,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 02:00:00",
+  "eventos": 154595,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 03:00:00",
+  "eventos": 149509,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 04:00:00",
+  "eventos": 148558,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 05:00:00",
+  "eventos": 146614,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 06:00:00",
+  "eventos": 148386,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 07:00:00",
+  "eventos": 147620,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 08:00:00",
+  "eventos": 151315,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 09:00:00",
+  "eventos": 154392,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 10:00:00",
+  "eventos": 153797,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 11:00:00",
+  "eventos": 152119,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 12:00:00",
+  "eventos": 164927,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 13:00:00",
+  "eventos": 163707,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 14:00:00",
+  "eventos": 164840,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 15:00:00",
+  "eventos": 157814,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 16:00:00",
+  "eventos": 160659,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 17:00:00",
+  "eventos": 160344,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 18:00:00",
+  "eventos": 158574,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 19:00:00",
+  "eventos": 158886,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 20:00:00",
+  "eventos": 156148,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 21:00:00",
+  "eventos": 154633,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 22:00:00",
+  "eventos": 152917,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-15 23:00:00",
+  "eventos": 152544,
+  "conjunto": "train"
+ },
+ {
+  "hora_utc": "2026-03-16 00:00:00",
+  "eventos": 148580,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 01:00:00",
+  "eventos": 153588,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 02:00:00",
+  "eventos": 153572,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 03:00:00",
+  "eventos": 150408,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 04:00:00",
+  "eventos": 147965,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 05:00:00",
+  "eventos": 151518,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 06:00:00",
+  "eventos": 152953,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 07:00:00",
+  "eventos": 153735,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 08:00:00",
+  "eventos": 153756,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 09:00:00",
+  "eventos": 156122,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 10:00:00",
+  "eventos": 155438,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 11:00:00",
+  "eventos": 156302,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 12:00:00",
+  "eventos": 159173,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 13:00:00",
+  "eventos": 159316,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 14:00:00",
+  "eventos": 156291,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 15:00:00",
+  "eventos": 151791,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 16:00:00",
+  "eventos": 153180,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 17:00:00",
+  "eventos": 155463,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 18:00:00",
+  "eventos": 160127,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 19:00:00",
+  "eventos": 163129,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 20:00:00",
+  "eventos": 154189,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 21:00:00",
+  "eventos": 154906,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 22:00:00",
+  "eventos": 151254,
+  "conjunto": "test"
+ },
+ {
+  "hora_utc": "2026-03-16 23:00:00",
+  "eventos": 153514,
+  "conjunto": "test"
+ }
+]

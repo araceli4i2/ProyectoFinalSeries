@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interfaz estática DAT-262: cadenas de Markov, PageRank y SARIMA sobre actividad pública de GitHub.">
+  <title>DAT-262 · GitHub estocástico</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="bg-orbs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Inicio">
+      <span class="brand-mark">Σ</span>
+      <span>
+        <strong>DAT-262</strong>
+        <small>Procesos estocásticos · GH Archive</small>
+      </span>
+    </a>
+    <nav class="tabs" id="main-nav" aria-label="Secciones del proyecto">
+      <button class="tab-btn active" data-tab="overview" type="button">Overview</button>
+      <button class="tab-btn" data-tab="markov" type="button">Capítulo 3 · Markov</button>
+      <button class="tab-btn" data-tab="pagerank" type="button">Capítulo 3 · PageRank</button>
+      <button class="tab-btn" data-tab="sarima" type="button">Capítulo 6 · SARIMA</button>
+    </nav>
+    <div class="topbar-status"><span class="pulse"></span><span id="topbar-status-text">Resultados precalculados</span></div>
+  </header>
+
+  <main>
+    <!-- ============================ OVERVIEW ============================ -->
+    <section id="tab-overview" class="tab-panel active" aria-labelledby="ov-title">
+      <div class="hero">
+        <div class="eyebrow">Observatorio de actividad global</div>
+        <h1 id="ov-title">Una hora de GitHub, <span class="gradient-text">dos lentes estocásticas</span></h1>
+        <p class="lead">
+          La interfaz reúne dos escalas complementarias: la microescala de una hora (10 de marzo de 2026, 12:00 UTC)
+          con cadenas de Markov y PageRank, y la macroescala de 168 horas con un modelo SARIMA.
+          Todo se lee desde resultados precalculados; no se ejecuta Python en el navegador.
+        </p>
+        <div class="hero-meta">
+          <span class="pill"><span class="dot"></span><strong>161,817</strong> eventos micro</span>
+          <span class="pill blue"><span class="dot"></span><strong>168 h</strong> serie macro</span>
+          <span class="pill purple"><span class="dot"></span><strong>16</strong> tipos de evento</span>
+          <span class="pill orange"><span class="dot"></span>GH Archive · 2026-03-10</span>
+        </div>
+      </div>
+
+      <div id="ov-kpis" class="kpi-grid"></div>
+
+      <div class="grid-main">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Ritmo de la hora</div>
+              <div class="card-subtitle">Eventos por minuto, 12:00–12:59 UTC. Cada punto es un minuto real.</div>
+            </div>
+            <span class="badge green">Micro</span>
+          </div>
+          <div class="card-body tight"><div id="ov-minute" class="chart"></div></div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Mezcla de eventos</div>
+              <div class="card-subtitle">Frecuencia observada por tipo de evento en la hora analizada.</div>
+            </div>
+            <span class="badge blue">16 estados</span>
+          </div>
+          <div class="card-body tight"><div id="ov-types" class="chart"></div></div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">¿Quién produce la actividad?</div>
+              <div class="card-subtitle">Eventos asociados a una organización frente a cuentas personales.</div>
+            </div>
+            <span class="badge purple">Composición</span>
+          </div>
+          <div class="card-body tight"><div id="ov-org" class="chart"></div></div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Dos escalas, una misma fuente</div>
+              <div class="card-subtitle">Del evento individual al patrón semanal.</div>
+            </div>
+            <span class="badge orange">Diseño</span>
+          </div>
+          <div class="card-body">
+            <div class="fact-list">
+              <div class="fact">
+                <div class="fact-label">Micro · ventana</div>
+                <div class="fact-value mono">2026-03-10 · 12:00 UTC</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Micro · unidad</div>
+                <div class="fact-value">Evento público individual</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Macro · ventana</div>
+                <div class="fact-value mono">168 horas continuas</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Macro · unidad</div>
+                <div class="fact-value">Conteo horario global</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Validación</div>
+                <div class="fact-value" id="ov-validation-value">—</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Hallazgos que conectan las dos escalas</h2>
+          <p>Tres lecturas rápidas para entrar al detalle de cada capítulo.</p>
+        </div>
+      </div>
+      <div id="ov-findings" class="grid-3"></div>
+
+      <div id="ov-validation" class="callout green" style="margin-top: 18px;"></div>
+    </section>
+
+    <!-- ============================ MARKOV ============================ -->
+    <section id="tab-markov" class="tab-panel" aria-labelledby="mk-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Capítulo 3 · Escala micro</div>
+          <h2 id="mk-title">Cadena de Markov de primer orden</h2>
+          <p>La secuencia cronológica de tipos de evento define una cadena de 16 estados. La matriz P resume qué evento tiende a seguir a cada evento.</p>
+        </div>
+        <div class="head-badges">
+          <span class="badge green">πP = π</span>
+          <span class="badge blue">16 × 16</span>
+        </div>
+      </div>
+
+      <div id="mk-kpis" class="kpi-grid"></div>
+
+      <div class="grid-main">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Matriz de transición P</div>
+              <div class="card-subtitle">P<sub>ij</sub> = probabilidad de pasar del evento i al evento j. Pasa el cursor para leer cada celda.</div>
+            </div>
+            <span class="badge green">Empírica</span>
+          </div>
+          <div class="card-body tight"><div id="mk-heatmap" class="chart heatmap"></div></div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Distribución estacionaria π</div>
+              <div class="card-subtitle">Proporción de tiempo a largo plazo en cada estado. Haz clic en una barra o en un estado para ver su detalle.</div>
+            </div>
+            <span class="badge purple">Largo plazo</span>
+          </div>
+          <div class="card-body tight">
+            <div id="mk-pi-chart" class="chart tall"></div>
+            <div id="mk-detail" class="detail-panel"></div>
+            <div id="mk-state-list" class="chips"></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Transiciones dominantes</div>
+              <div class="card-subtitle">Pares origen → destino con mayor probabilidad condicional.</div>
+            </div>
+            <span class="badge blue">Top 12</span>
+          </div>
+          <div class="card-body tight">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Origen</th><th>Destino</th><th class="num">P</th><th class="num">Conteo</th></tr></thead>
+                <tbody id="mk-top-transitions"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Propiedades de la cadena</div>
+              <div class="card-subtitle">Diagnóstico estructural y numérico de la matriz de transición.</div>
+            </div>
+            <span class="badge orange">Diagnóstico</span>
+          </div>
+          <div class="card-body">
+            <div id="mk-properties" class="fact-list"></div>
+            <div id="mk-properties-note" class="callout blue" style="margin-top: 14px;"></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Evidencia visual · Markov</h2>
+          <p>Las figuras originales del capítulo, generadas con Matplotlib y listas para el informe.</p>
+        </div>
+      </div>
+      <div class="evidence-grid">
+        <figure class="evidence-card">
+          <img src="../resultados_capitulo3/figuras/04_matriz_transicion.png" alt="Mapa de calor de la matriz de transición P" loading="lazy">
+          <figcaption class="caption">Matriz de transición P<span>Mapa de calor 16 × 16</span></figcaption>
+        </figure>
+        <figure class="evidence-card">
+          <img src="../resultados_capitulo3/figuras/05_distribucion_estacionaria.png" alt="Gráfico de distribución estacionaria pi" loading="lazy">
+          <figcaption class="caption">Distribución estacionaria π<span>Probabilidad de largo plazo por estado</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================ PAGERANK ============================ -->
+    <section id="tab-pagerank" class="tab-panel" aria-labelledby="pr-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Capítulo 3 · Escala de red</div>
+          <h2 id="pr-title">PageRank sobre el grafo de navegación</h2>
+          <p>Cada usuario genera un camino entre repositorios consecutivos. PageRank (α = 0.85) mide la centralidad de tránsito dentro de esa red dirigida y ponderada.</p>
+        </div>
+        <div class="head-badges">
+          <span class="badge purple">α = 0.85</span>
+          <span class="badge green">Top 50</span>
+        </div>
+      </div>
+
+      <div id="pr-kpis" class="kpi-grid"></div>
+
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Red de los repositorios más influyentes</div>
+            <div class="card-subtitle">Nodos proporcionales al score, aristas dirigidas y animación de flujo real. Explora, busca y reproduce la hora.</div>
+          </div>
+          <span class="badge purple">Cytoscape interactivo</span>
+        </div>
+        <div class="card-body">
+          <div class="toolbar">
+            <div class="tool-group">
+              <label>Vista
+                <select id="pr-layout" aria-label="Tipo de layout">
+                  <option value="preset">Ramas Git</option>
+                  <option value="cose">Fuerzas</option>
+                </select>
+              </label>
+            </div>
+            <div class="tool-group">
+              <label>Top N <input id="pr-topn" type="range" min="10" max="50" value="50" step="5" aria-label="Cantidad de nodos"> <span id="pr-topn-label" class="mono">50</span></label>
+            </div>
+            <div class="tool-group">
+              <input id="pr-search" type="search" placeholder="Buscar repositorio…" aria-label="Buscar repositorio">
+            </div>
+            <div class="tool-group">
+              <span>Modo</span>
+              <label><input type="radio" name="pagerank-anim-mode-radio" value="flujo" checked> Flujo continuo</label>
+              <label><input type="radio" name="pagerank-anim-mode-radio" value="reproduccion"> Reproducción</label>
+            </div>
+            <div class="tool-group">
+              <span>Velocidad</span>
+              <label><input type="radio" name="pagerank-anim-speed-radio" value="0.5"> 0.5×</label>
+              <label><input type="radio" name="pagerank-anim-speed-radio" value="1" checked> 1×</label>
+              <label><input type="radio" name="pagerank-anim-speed-radio" value="2"> 2×</label>
+            </div>
+            <button id="pagerank-anim-play-btn" class="btn primary" type="button">Pausar</button>
+            <button id="pagerank-anim-reset-btn" class="btn" type="button">Reiniciar</button>
+          </div>
+
+          <div class="graph-layout">
+            <div class="graph-stage" id="pagerank-cytoscape-wrapper">
+              <div id="pagerank-cytoscape"></div>
+              <canvas id="pagerank-flow-canvas" aria-hidden="true"></canvas>
+              <div class="graph-overlay-top">
+                <span id="pagerank-clock" class="graph-clock">Hora completa · 12:00–13:00 UTC</span>
+                <span class="badge blue">Grafo Top 50</span>
+              </div>
+              <div class="progress-track"><div id="pagerank-progress-bar"></div></div>
+            </div>
+            <aside class="graph-side">
+              <div class="side-card">
+                <div class="side-title"><span>Flujo de la hora</span><span id="pagerank-counter-total" class="side-counter">—</span></div>
+                <div class="empty-note">La animación usa las transiciones reales entre repositorios del Top 50.</div>
+              </div>
+              <div class="side-card">
+                <div class="side-title"><span>Ranking de actividad</span><span class="badge green">Acumulado</span></div>
+                <div id="pagerank-activity-ranking" class="side-list"><div class="empty-note">Calculando…</div></div>
+              </div>
+              <div class="side-card">
+                <div class="side-title"><span>Últimas transiciones</span><span class="badge blue">Tiempo real</span></div>
+                <div id="pagerank-recent-transitions" class="side-list"><div class="empty-note">Esperando transiciones…</div></div>
+              </div>
+              <div class="side-card">
+                <div class="side-title"><span>Repositorio en foco</span><span class="badge purple">Detalle</span></div>
+                <div id="pr-node-detail"><div class="empty-note">Haz clic en un nodo o en una fila del Top 15.</div></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </article>
+
+      <div class="grid-2" style="margin-top: 20px;">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top 15 por PageRank</div>
+              <div class="card-subtitle">Haz clic en una fila para centrar el nodo en el grafo y ver su detalle.</div>
+            </div>
+            <span class="badge purple">Centralidad</span>
+          </div>
+          <div class="card-body tight">
+            <div class="table-wrap tall">
+              <table class="data-table">
+                <thead><tr><th>#</th><th>Repositorio</th><th class="num">PageRank</th></tr></thead>
+                <tbody id="pr-top15-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Cómo leer la red</div>
+              <div class="card-subtitle">El score no mide estrellas ni popularidad global: mide tránsito secuencial.</div>
+            </div>
+            <span class="badge orange">Lectura</span>
+          </div>
+          <div class="card-body">
+            <div class="fact-list">
+              <div class="fact"><div class="fact-label">Nodos en el grafo completo</div><div class="fact-value mono" id="pr-total-nodes">—</div></div>
+              <div class="fact"><div class="fact-label">Aristas en el grafo completo</div><div class="fact-value mono" id="pr-total-edges">—</div></div>
+              <div class="fact"><div class="fact-label">Nodos en el subgrafo visible</div><div class="fact-value mono">50</div></div>
+              <div class="fact"><div class="fact-label">Aristas del subgrafo</div><div class="fact-value mono" id="pr-sub-edges">—</div></div>
+              <div class="fact"><div class="fact-label">Transiciones reales Top 50</div><div class="fact-value mono" id="pr-real-transitions">—</div></div>
+              <div class="fact"><div class="fact-label">Componentes débiles</div><div class="fact-value mono" id="pr-components">—</div></div>
+            </div>
+            <div class="callout blue" style="margin-top: 14px;">
+              Los repositorios con actividad aislada no generan aristas. La red conserva solo los caminos
+              en los que un usuario pasó de un repositorio a otro distinto dentro de la misma hora.
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Evidencia visual · PageRank</h2>
+          <p>El Top 15 también queda disponible como figura estática para el informe.</p>
+        </div>
+      </div>
+      <div class="evidence-grid">
+        <figure class="evidence-card">
+          <img src="../resultados_capitulo3/figuras/06_pagerank_top15.png" alt="Gráfico de barras del Top 15 por PageRank" loading="lazy">
+          <figcaption class="caption">Top 15 por PageRank<span>α = 0.85, pesos por transición</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================ SARIMA ============================ -->
+    <section id="tab-sarima" class="tab-panel" aria-labelledby="sa-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Capítulo 6 · Escala macro</div>
+          <h2 id="sa-title">SARIMA para la serie horaria global</h2>
+          <p>168 horas continuas de actividad global de GitHub y un modelo SARIMA(1,1,1)(0,1,1)<sub>24</sub> con deriva para pronosticar las últimas 24 horas.</p>
+        </div>
+        <div class="head-badges">
+          <span class="badge blue">Box–Jenkins</span>
+          <span class="badge green">24 h out-of-sample</span>
+        </div>
+      </div>
+
+      <div id="sa-kpis" class="kpi-grid"></div>
+
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Pronóstico interactivo a 24 horas</div>
+            <div class="card-subtitle">Serie observada, pronóstico SARIMA, banda de confianza al 95 %, ARIMA no estacional y naive estacional.</div>
+          </div>
+          <span class="badge purple">Plotly interactivo</span>
+        </div>
+        <div class="card-body tight"><div id="sa-forecast" class="chart tall" style="min-height: 500px;"></div></div>
+      </article>
+
+      <div class="grid-main even" style="margin-top: 20px;">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Modelo final</div>
+              <div class="card-subtitle">SARIMA(1,1,1)(0,1,1)<sub>24</sub> con tendencia constante.</div>
+            </div>
+            <span class="badge green">AIC mínimo</span>
+          </div>
+          <div class="card-body">
+            <div class="fact-list">
+              <div class="fact"><div class="fact-label">Ecuación</div><div class="fact-value mono">(1 − φ₁B)(1 − B)(1 − B²⁴) yₜ = c + (1 + θ₁B)(1 + Θ₂₄B²⁴) εₜ</div></div>
+              <div class="fact"><div class="fact-label">AIC / BIC</div><div class="fact-value mono" id="sa-aic-bic">—</div></div>
+              <div class="fact"><div class="fact-label">Observaciones de entrenamiento</div><div class="fact-value mono" id="sa-nobs">—</div></div>
+            </div>
+            <div class="table-wrap" style="margin-top: 14px; max-height: 280px;">
+              <table class="data-table">
+                <thead><tr><th>Parámetro</th><th class="num">Coeficiente</th><th class="num">Error est.</th><th class="num">p-valor</th></tr></thead>
+                <tbody id="sa-params-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Diagnóstico del modelo</div>
+              <div class="card-subtitle">Contraste de ruido blanco, normalidad, heterocedasticidad y cobertura de intervalos.</div>
+            </div>
+            <span class="badge orange">Validación</span>
+          </div>
+          <div class="card-body">
+            <div id="sa-diagnostics" class="diag-grid"></div>
+            <div id="sa-diagnostic-note" class="callout" style="margin-top: 14px;"></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-main even">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Comparación de pronósticos</div>
+              <div class="card-subtitle">Métricas sobre las últimas 24 horas. El mejor valor de cada columna se resalta en verde.</div>
+            </div>
+            <span class="badge blue">Holdout</span>
+          </div>
+          <div class="card-body tight">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Modelo</th><th class="num">MAE</th><th class="num">RMSE</th><th class="num">MAPE</th><th class="num">MASE</th></tr></thead>
+                <tbody id="sa-comparison-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Identificación y estacionariedad</div>
+              <div class="card-subtitle">Fuerza estacional, diferenciación y pruebas ADF/KPSS sobre log(serie).</div>
+            </div>
+            <span class="badge purple">Box–Jenkins</span>
+          </div>
+          <div class="card-body">
+            <div class="fact-list">
+              <div class="fact"><div class="fact-label">Fuerza estacional F<sub>s</sub></div><div class="fact-value mono" id="sa-fs">—</div></div>
+              <div class="fact"><div class="fact-label">Umbral de estacionalidad</div><div class="fact-value mono" id="sa-fs-threshold">—</div></div>
+              <div class="fact"><div class="fact-label">Diferenciación regular / estacional</div><div class="fact-value mono" id="sa-diff">—</div></div>
+              <div class="fact"><div class="fact-label">Media serie diferenciada</div><div class="fact-value mono" id="sa-mean-diff">—</div></div>
+            </div>
+            <div class="table-wrap" style="margin-top: 14px; max-height: 240px;">
+              <table class="data-table">
+                <thead><tr><th>Serie</th><th class="num">ADF p</th><th class="num">KPSS p</th><th>Lectura</th></tr></thead>
+                <tbody id="sa-identification-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div id="sa-critical" class="callout" style="margin: 18px 0 24px;"></div>
+
+      <div class="section-head">
+        <div>
+          <h2>Evidencia visual · SARIMA</h2>
+          <p>Siete figuras del capítulo: serie, perfil horario, STL, diferenciaciones, ACF/PACF, residuos y pronóstico.</p>
+        </div>
+      </div>
+      <div class="evidence-grid" id="sa-evidence"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DAT-262</strong> · Procesos estocásticos y series temporales · Universidad Mayor de San Andrés</div>
+      <div>Datos: GH Archive · Interfaz estática sin runtime Python</div>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de figura">
+    <button id="lightbox-close" class="lb-close" type="button" aria-label="Cerrar">×</button>
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption" class="lb-caption"></div>
+  </div>
+
+  <script src="vendor/cytoscape.min.js"></script>
+  <script src="vendor/plotly.min.js"></script>
+  <script src="../resultados_capitulo3/datos.js"></script>
+  <script src="../resultados_capitulo6/datos.js"></script>
+  <script src="assets/kpi_animation.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/flow_animation.js"></script>
+</body>
+</html>

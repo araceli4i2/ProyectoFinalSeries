@@ -1,0 +1,17 @@
+tipo,pi,frecuencia_observada,diferencia
+CommitCommentEvent,0.000185,0.000185,-0.0
+CreateEvent,0.093336,0.093334,2e-06
+DeleteEvent,0.035071,0.03507,1e-06
+DiscussionEvent,4.9e-05,4.9e-05,-0.0
+ForkEvent,0.001681,0.001681,-0.0
+GollumEvent,0.00013,0.00013,-0.0
+IssueCommentEvent,0.009751,0.009752,-1e-06
+IssuesEvent,0.008204,0.008213,-9e-06
+MemberEvent,0.000951,0.000952,-0.0
+PublicEvent,0.000136,0.000136,-0.0
+PullRequestEvent,0.023425,0.023428,-3e-06
+PullRequestReviewCommentEvent,0.007562,0.007564,-2e-06
+PullRequestReviewEvent,0.006907,0.006909,-2e-06
+PushEvent,0.802848,0.802833,1.5e-05
+ReleaseEvent,0.001681,0.001681,-0.0
+WatchEvent,0.008082,0.008083,-1e-06

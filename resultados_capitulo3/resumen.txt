@@ -1,0 +1,47 @@
+DAT-262 - Capitulo 3: Markov y PageRank sobre GH Archive
+================================================================
+Fecha y hora:        2026-03-10 12:00 UTC
+Fuente:              https://data.gharchive.org/2026-03-10-12.json.gz
+Archivo:             2026-03-10-12.json.gz
+Tamano:              27,781,082 bytes
+SHA256:              78b352e8568a7c56dd6de2ec17e1102750f4cbca017f3f14d3591f190e4cad5e
+
+TAMANO DE MUESTRA
+  Eventos:           161,817
+  Usuarios:          64,307
+  Repositorios:      93,246
+  Tipos de evento:   16
+  Transiciones:      161,816
+  Con organizacion:  27,857
+  Personales:        133,960
+
+MARKOV
+  Estados:           16
+  pi(PushEvent):     0.802848
+  Residual ||piP-pi||: 6.050e-17
+  Entropia media:    1.626365
+
+PAGERANK
+  Nodos:             36,281
+  Aristas:           41,902
+  Top 1:             aiandbotsgalore/copy-spaces-to-youtube-pipeline (0.002575)
+  Transiciones Top50:153
+
+VALIDACION
+  Todo coincide:     SI
+  - total_eventos: OK (obtenido=161817, esperado=161817)
+  - transiciones: OK (obtenido=161816, esperado=161816)
+  - P(PushEvent->PushEvent): OK (obtenido=0.845218, esperado=0.845218)
+  - P(PushEvent->CreateEvent): OK (obtenido=0.093486, esperado=0.093486)
+  - P(PushEvent->DeleteEvent): OK (obtenido=0.036448, esperado=0.036448)
+  - P(PushEvent->PullRequestEvent): OK (obtenido=0.009299, esperado=0.009299)
+  - pi(PushEvent): OK (obtenido=0.802848, esperado=0.8028)
+  - pi(CreateEvent): OK (obtenido=0.093336, esperado=0.0933)
+  - pi(DeleteEvent): OK (obtenido=0.035071, esperado=0.0351)
+  - pi(PullRequestEvent): OK (obtenido=0.023425, esperado=0.0234)
+  - pi(IssueCommentEvent): OK (obtenido=0.009751, esperado=0.0098)
+  - PageRank top 1: OK (obtenido={'repo': 'aiandbotsgalore/copy-spaces-to-youtube-pipeline', 'pagerank': 0.002575}, esperado={'repo': 'aiandbotsgalore/copy-spaces-to-youtube-pipeline', 'pagerank': 0.002575})
+  - PageRank top 2: OK (obtenido={'repo': 'thedoggybrad/easylist-mirror', 'pagerank': 0.001671}, esperado={'repo': 'thedoggybrad/easylist-mirror', 'pagerank': 0.001671})
+  - PageRank top 3: OK (obtenido={'repo': 'alire-project/alire-crates-ci', 'pagerank': 0.001204}, esperado={'repo': 'alire-project/alire-crates-ci', 'pagerank': 0.001204})
+  - PageRank top 4: OK (obtenido={'repo': 'tscottjendev/MSDyn365BC.Sandbox.Code.History', 'pagerank': 0.001085}, esperado={'repo': 'tscottjendev/MSDyn365BC.Sandbox.Code.History', 'pagerank': 0.001085})
+  - PageRank top 5: OK (obtenido={'repo': 'anton2423/didactic-broccoli', 'pagerank': 0.000977}, esperado={'repo': 'anton2423/didactic-broccoli', 'pagerank': 0.000977})

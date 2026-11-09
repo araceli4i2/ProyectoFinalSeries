@@ -1,0 +1,2 @@
+fecha,hora_utc,total_eventos,usuarios_unicos,repositorios_unicos,tipos_evento,transiciones,eventos_con_org,eventos_sin_org,nodos_grafo,aristas_grafo,transiciones_top50
+2026-03-10,12:00 UTC,161817,64307,93246,16,161816,27857,133960,36281,41902,153
