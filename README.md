@@ -1,91 +1,30 @@
-# Interfaz estática DAT-262: Markov, PageRank y SARIMA sobre GH Archive
+# DAT-262: Markov, PageRank y SARIMA sobre GH Archive
 
-Interfaz web **estática** en HTML, CSS y JavaScript para presentar los resultados de dos escalas de análisis sobre eventos públicos de [GH Archive](https://www.gharchive.org/):
-
-1. **Escala micro (red y cadenas de Markov)**:
-   - Cadena de Markov de primer orden sobre los tipos de evento.
-   - PageRank ($\alpha=0.85$) sobre el grafo dirigido de navegación entre repositorios.
-   - Ventana temporal: **10 de marzo de 2026, 12:00 UTC**.
-2. **Escala macro (series temporales)**:
-   - Serie horaria continua de 168 horas, del 10 al 16 de marzo de 2026.
-   - Metodología Box-Jenkins y modelo **SARIMA(1,1,1)(0,1,1)₂₄** con tendencia constante.
-   - Pronóstico out-of-sample de 24 horas e intervalos de confianza al 95 %.
-
-La interfaz no necesita Python, Dash ni un servidor en ejecución: consume resultados precalculados y funciona abriendo `interface/index.html` en el navegador.
+Documentación única del proyecto. La entrega final es una interfaz estática que consume resultados precalculados de los Capítulos 3 y 6.
 
 ---
 
-## Contenido de la interfaz
+## 1. Cómo arrancar la interfaz
 
-| Pestaña | Contenido |
-| :--- | :--- |
-| **Overview** | Resumen de métricas micro y macro, actividad por tipo de evento y serie horaria. |
-| **Capítulo 3 · Markov** | Matriz de transición, distribución estacionaria, diagnóstico de la cadena y evidencia visual. |
-| **Capítulo 3 · PageRank** | KPIs del grafo, Top 15, grafo interactivo con Cytoscape, animación de flujo y evidencia visual. |
-| **Capítulo 6 · SARIMA** | Pronóstico interactivo con Plotly, modelo final, diagnóstico, comparación de pronósticos y siete figuras de evidencia. |
+La interfaz es **HTML estático**. No hay que compilar JavaScript, no se usa Node, `npm`, bundler ni servidor Python para visualizarla.
 
-La interfaz incluye búsqueda de repositorios, slider de Top N, modos de animación, lightbox para las figuras y diseño responsive.
+### Opción A: abrir directamente
 
----
-
-## Estructura del proyecto
+Abre en el navegador:
 
 ```text
-ProyectoFinalSeries/
-├── interface/
-│   ├── index.html                 # Interfaz única con las cuatro pestañas
-│   ├── assets/
-│   │   ├── style.css              # Tema visual y estilos responsive
-│   │   ├── app.js                 # Render de datos, Plotly, tablas y Cytoscape
-│   │   ├── flow_animation.js      # Animación Canvas del flujo PageRank
-│   │   └── kpi_animation.js       # Contadores animados de KPIs
-│   └── vendor/
-│       ├── cytoscape.min.js       # Cytoscape vendorizado (sin CDN)
-│       └── plotly.min.js          # Plotly vendorizado (sin CDN)
-├── resultados_capitulo3/
-│   ├── datos.json                 # Dataset agregado completo del Capítulo 3
-│   ├── datos.js                   # Mismos datos, expuestos como window.CAP3
-│   ├── metricas.json              # Copia estructurada para revisión
-│   ├── resumen.txt                # Resumen legible y validación
-│   ├── figuras/                   # Seis figuras PNG de evidencia
-│   └── tablas/                    # Tablas CSV de Markov, PageRank y flujo
-├── resultados_capitulo6/
-│   ├── datos.js                   # Datos del Capítulo 6, expuestos como window.CAP6
-│   ├── metricas.json              # Resultados completos del modelo SARIMA
-│   ├── LEEME.txt                  # Descripción de los archivos del Capítulo 6
-│   ├── modelo_sarima.pkl          # Modelo ajustado
-│   ├── figuras/                   # Siete figuras PNG de evidencia
-│   └── tablas/                    # Serie horaria, grilla y comparación de pronósticos
-├── tools/capitulo3/
-│   ├── run_capitulo3.py           # Generador reproducible de resultados del Capítulo 3
-│   ├── README.md                  # Instrucciones del runner
-│   └── requirements.txt           # Dependencias mínimas del runner
-├── notebooks/                     # Cuadernos originales de referencia metodológica
-├── data/raw/                      # Archivos crudos de GH Archive (ignorados por Git)
-├── engine/                        # Motor analítico legado, conservado como referencia
-├── app/                           # Dashboard Dash legado, conservado como referencia
-├── PROJECT_CONTEXT.md             # Reglas de arquitectura y reproducibilidad
-└── requirements.txt               # Dependencias del proyecto completo
+interface/index.html
 ```
 
-Los archivos pesados de GH Archive, los Parquet y los archivos `.json.gz` no se versionan. Los resultados del Capítulo 3 que sí se versionan son ligeros y suficientes para alimentar la interfaz.
+En Windows también puedes ejecutar desde la raíz:
 
----
+```powershell
+start interface\index.html
+```
 
-## Uso de la interfaz
+### Opción B: servidor local opcional
 
-### Abrir directamente
-
-Abre `interface/index.html` en un navegador moderno. La interfaz carga por rutas relativas:
-
-- `../resultados_capitulo3/datos.js`
-- `../resultados_capitulo6/datos.js`
-- `../resultados_capitulo3/figuras/`
-- `../resultados_capitulo6/figuras/`
-
-### Servidor local opcional
-
-Si el navegador restringe la carga de archivos locales, inicia un servidor desde la raíz del proyecto:
+Si el navegador bloquea la carga de archivos locales, inicia un servidor desde la raíz del proyecto:
 
 ```bash
 python -m http.server 8000
@@ -97,59 +36,146 @@ Luego abre:
 http://127.0.0.1:8000/interface/
 ```
 
+El navegador carga automáticamente:
+
+- `interface/vendor/cytoscape.min.js`
+- `interface/vendor/plotly.min.js`
+- `../resultados_capitulo3/datos.js` como `window.CAP3`
+- `../resultados_capitulo6/datos.js` como `window.CAP6`
+- `interface/assets/app.js`, `flow_animation.js` y `kpi_animation.js`
+
+No se requiere ejecutar el runner para ver la interfaz: los resultados ya están generados.
+
 ---
 
-## Regenerar los resultados del Capítulo 3
+## 2. Estructura actual de carpetas
 
-El runner descarga el archivo crudo de GH Archive si no existe, lo parsea y genera todas las tablas, figuras y datos de la interfaz.
+```text
+ProyectoFinalSeries/
+├── interface/
+│   ├── index.html                 # Interfaz única con cuatro pestañas
+│   ├── assets/
+│   │   ├── style.css              # Tema visual y responsive
+│   │   ├── app.js                 # Render de datos, tablas, Plotly y Cytoscape
+│   │   ├── flow_animation.js      # Animación Canvas del flujo PageRank
+│   │   └── kpi_animation.js       # Contadores animados de KPIs
+│   └── vendor/
+│       ├── cytoscape.min.js       # Cytoscape vendorizado
+│       └── plotly.min.js          # Plotly vendorizado
+├── resultados_capitulo3/
+│   ├── datos.js                   # window.CAP3
+│   ├── datos.json                 # Dataset agregado completo
+│   ├── metricas.json              # Copia estructurada para revisión
+│   ├── resumen.txt                # Resumen y validación
+│   ├── figuras/                   # Seis PNG de evidencia
+│   └── tablas/                    # Tablas CSV
+├── resultados_capitulo6/
+│   ├── datos.js                   # window.CAP6
+│   ├── metricas.json              # Resultados completos del SARIMA
+│   ├── LEEME.txt                  # Descripción de archivos
+│   ├── modelo_sarima.pkl          # Modelo ajustado
+│   ├── figuras/                   # Siete PNG de evidencia
+│   └── tablas/                    # Serie, grilla y comparación
+├── tools/
+│   └── capitulo3/
+│       ├── run_capitulo3.py       # Regenera los resultados del Capítulo 3
+│       ├── README.md              # Instrucciones del runner
+│       └── requirements.txt       # Dependencias del runner
+├── data/
+│   ├── raw/                       # Archivo .json.gz local (ignorado por Git)
+│   └── processed/                 # Carpeta legada, actualmente vacía
+├── notebooks/
+│   ├── DAT262_Capitulo3_Markov_PageRank_GitHub (1).ipynb
+│   ├── DAT262_Capitulo6_SARIMA_Final (1).ipynb
+│   └── informe.docx
+├── .gitignore
+└── README.md
+```
 
-### Instalación de dependencias
+Las carpetas `app/` y `engine/` del Dash anterior ya no forman parte de la estructura actual.
+
+### ¿Qué hace `tools/`?
+
+Contiene únicamente el runner reproducible del Capítulo 3 y su documentación. **No es necesario para abrir la interfaz**; solo sirve para regenerar `resultados_capitulo3/` y reconstruir `resultados_capitulo6/datos.js`.
+
+- Consérvala si quieres poder regenerar los resultados.
+- Puedes borrarla si solo entregarás los resultados ya generados y la interfaz estática.
+
+### ¿Qué hace `data/`?
+
+- `data/raw/`: guarda el archivo crudo de GH Archive usado por el runner (`2026-03-10-12.json.gz`). Está ignorado por Git y el runner puede descargarlo de nuevo si falta.
+- `data/processed/`: carpeta del flujo Dash anterior. Está vacía y no la usa la interfaz.
+
+Puedes borrar `data/` completa sin afectar la interfaz. Si conservas `tools/`, el runner volverá a descargar el archivo crudo cuando sea necesario.
+
+### ¿Qué se puede borrar sin romper la entrega?
+
+| Ruta | ¿Se puede borrar? | Efecto |
+| :--- | :--- | :--- |
+| `data/` | Sí | La interfaz sigue funcionando; el runner descarga de nuevo el archivo crudo. |
+| `tools/` | Sí, si no vas a regenerar resultados | La interfaz sigue funcionando; pierdes la reproducibilidad del Capítulo 3. |
+| `notebooks/` | Sí, si solo entregas la interfaz | Pierdes la referencia metodológica y el informe. |
+| `resultados_capitulo3/` | No | La pestaña de Markov y PageRank dejaría de cargar. |
+| `resultados_capitulo6/` | No | La pestaña SARIMA dejaría de cargar. |
+| `interface/` | No | Es la entrega final. |
+
+---
+
+## 3. Datos del Capítulo 3
+
+El Capítulo 3 se calcula a partir de **una hora** de GH Archive:
+
+- Archivo: `2026-03-10-12.json.gz`
+- Fecha: 10 de marzo de 2026, 12:00 UTC
+- Tamaño: 27,781,082 bytes
+- SHA-256: `78b352e8568a7c56dd6de2ec17e1102750f4cbca017f3f14d3591f190e4cad5e`
+
+### Contenido de `resultados_capitulo3/`
+
+| Archivo | Contenido |
+| :--- | :--- |
+| `datos.js` | Todos los datos del capítulo como `window.CAP3`; lo consume la interfaz. |
+| `datos.json` | El mismo dataset en JSON legible. |
+| `metricas.json` | Copia estructurada de `datos.json` para revisión. |
+| `resumen.txt` | Resumen legible, fuente y resultado de validación. |
+| `figuras/` | Seis PNG: usuarios Top 15, frecuencia de tipos, eventos por minuto, matriz de transición, distribución estacionaria y PageRank Top 15. |
+| `tablas/` | Trece CSV: resumen, frecuencia, usuarios, repositorios, eventos por minuto, matriz de transición, conteos, distribución estacionaria, PageRank, red Top 50, flujo y ranking de actividad. |
+
+### Cómo regenerarlo
+
+Si borraste `tools/` o `data/`, primero recupera las dependencias del runner:
 
 ```bash
 python -m pip install -r tools/capitulo3/requirements.txt
 ```
 
-### Ejecución
+Luego ejecuta:
 
 ```bash
 python tools/capitulo3/run_capitulo3.py
 ```
 
-Opciones disponibles:
+Opciones útiles:
 
-```bash
-python tools/capitulo3/run_capitulo3.py --help
+```text
+--fecha AAAA-MM-DD    Fecha del archivo GH Archive (por defecto: 2026-03-10)
+--hora 0-23           Hora UTC (por defecto: 12)
+--out RUTA            Carpeta de salida (por defecto: resultados_capitulo3)
+--force-download      Fuerza la descarga
+--keep-temp           Conserva tools/capitulo3/_tmp/ con el dataset completo
 ```
 
-| Opción | Descripción |
-| :--- | :--- |
-| `--fecha AAAA-MM-DD` | Fecha del archivo de GH Archive. Por defecto: `2026-03-10`. |
-| `--hora 0-23` | Hora UTC del archivo. Por defecto: `12`. |
-| `--out RUTA` | Carpeta de salida. Por defecto: `resultados_capitulo3/`. |
-| `--force-download` | Fuerza la descarga aunque el archivo ya exista. |
-| `--keep-temp` | Conserva `tools/capitulo3/_tmp/` con el dataset completo. |
-
-Al finalizar, el runner elimina `tools/capitulo3/_tmp/` salvo que se use `--keep-temp`.
-
-### Salidas generadas
-
-- `resultados_capitulo3/datos.json`
-- `resultados_capitulo3/datos.js`
-- `resultados_capitulo3/metricas.json`
-- `resultados_capitulo3/resumen.txt`
-- `resultados_capitulo3/figuras/01_usuarios_top15.png` a `06_pagerank_top15.png`
-- `resultados_capitulo3/tablas/*.csv`
-- `resultados_capitulo6/datos.js` (se reconstruye a partir de los resultados existentes del Capítulo 6)
+El runner elimina `tools/capitulo3/_tmp/` al finalizar, salvo que se use `--keep-temp`.
 
 ### Validación esperada
 
-El runner compara sus resultados con los benchmarks de los notebooks y escribe el resultado en `resumen.txt` y en `datos.json`:
+`resultados_capitulo3/resumen.txt` debe contener:
 
 ```text
 Validacion: TODO COINCIDE
 ```
 
-Métricas principales del archivo `2026-03-10-12.json.gz`:
+Valores principales:
 
 | Métrica | Valor |
 | :--- | :--- |
@@ -158,49 +184,54 @@ Métricas principales del archivo `2026-03-10-12.json.gz`:
 | Usuarios únicos | 64,307 |
 | Repositorios únicos | 93,246 |
 | Tipos de evento | 16 |
-| Eventos con organización | 27,857 |
-| Eventos personales | 133,960 |
 | Nodos del grafo | 36,281 |
 | Aristas del grafo | 41,902 |
 | $\pi(\text{PushEvent})$ | 0.802848 |
 | PageRank Top 1 | 0.002575 |
 
----
-
-## Reproducibilidad
-
-- El archivo de entrada es `2026-03-10-12.json.gz`, con SHA-256 `78b352e8568a7c56dd6de2ec17e1102750f4cbca017f3f14d3591f190e4cad5e`.
-- Para replicar exactamente los notebooks, el runner ordena con `sort_values("created_at")` usando el orden por defecto de pandas (quicksort). No se debe usar `kind="stable"` ni `mergesort`: cambia el orden de los empates y altera los benchmarks de Markov.
-- El runner trabaja con una sola hora de GH Archive y no descarga las 168 horas del Capítulo 6. Los resultados del Capítulo 6 se conservan en `resultados_capitulo6/` y se generaron con el notebook de referencia.
-- La validación numérica del Capítulo 3 se ejecuta automáticamente y se guarda en `resultados_capitulo3/datos.json`.
+> **Reproducibilidad:** el runner usa `sort_values("created_at")` con el orden por defecto de pandas (quicksort). No uses `kind="stable"` ni `mergesort`: cambia el orden de los empates y rompe los benchmarks de Markov.
 
 ---
 
-## Capítulo 6
+## 4. Datos del Capítulo 6
 
-Los resultados del Capítulo 6 ya están precalculados en `resultados_capitulo6/`. El notebook de referencia es:
+El Capítulo 6 usa una serie horaria continua de **168 horas**, del 10 al 16 de marzo de 2026, y un modelo **SARIMA(1,1,1)(0,1,1)₂₄** con tendencia constante. Los resultados están precalculados y no se recalculan al abrir la interfaz.
 
-- `notebooks/DAT262_Capitulo6_SARIMA_Final (1).ipynb`
+### Contenido de `resultados_capitulo6/`
 
-El runner del Capítulo 3 reconstruye únicamente `resultados_capitulo6/datos.js` a partir de:
+| Archivo | Contenido |
+| :--- | :--- |
+| `datos.js` | Todos los datos del capítulo como `window.CAP6`; lo consume la interfaz. |
+| `metricas.json` | Modelo, métricas, pronóstico, diagnóstico, identificación y entorno. |
+| `LEEME.txt` | Descripción breve de los archivos del capítulo. |
+| `modelo_sarima.pkl` | Modelo ajustado; no lo usa la interfaz, pero permite reutilizarlo. |
+| `figuras/` | Siete PNG: serie y log, perfil horario, STL, diferenciaciones, ACF/PACF, diagnóstico de residuos y pronóstico. |
+| `tablas/serie_horaria.json` | Serie observada usada por el gráfico. |
+| `tablas/comparacion_pronosticos.json` | Métricas de SARIMA, ARIMA no estacional y naive estacional. |
+| `tablas/grilla_completa.json` | Grilla de búsqueda/ajuste del modelo. |
+| `tablas/resumen_modelo_final.txt` | Resumen del modelo final. |
+
+### Cómo se reconstruye `datos.js`
+
+El runner del Capítulo 3 reconstruye `resultados_capitulo6/datos.js` a partir de:
 
 - `resultados_capitulo6/metricas.json`
 - `resultados_capitulo6/tablas/serie_horaria.json`
 - `resultados_capitulo6/tablas/comparacion_pronosticos.json`
 
-Si estos archivos no existen, el runner omite la generación de `datos.js` del Capítulo 6.
+No es necesario reentrenar SARIMA para actualizar la interfaz. Si quieres volver a ajustar el modelo, usa el notebook de referencia:
 
----
+```text
+notebooks/DAT262_Capitulo6_SARIMA_Final (1).ipynb
+```
 
-## Aplicación Dash legado
+### Resumen del modelo
 
-Las carpetas `app/` y `engine/` corresponden a la implementación anterior con Dash y al motor analítico de referencia. **No forman parte de la entrega final** y no son necesarias para abrir la interfaz estática.
-
-La entrega final es:
-
-- `interface/index.html`
-- `resultados_capitulo3/`
-- `resultados_capitulo6/`
-- `tools/capitulo3/run_capitulo3.py`
-
-El motor legado se conserva únicamente como referencia metodológica. No se deben agregar nuevas funcionalidades a `app/` ni depender de `engine/run_all.py` o `engine/sarima.py`, que fueron retirados.
+- Serie: 168 horas continuas.
+- Entrenamiento: 144 horas.
+- Pronóstico out-of-sample: 24 horas.
+- AIC: -544.92; BIC: -531.03.
+- MAE: 4,847 eventos por hora.
+- MASE: 1.383.
+- Cobertura del intervalo al 95 %: 70.83 %.
+- El modelo no supera al naive estacional según MASE; esa limitación se reporta explícitamente en la interfaz.
