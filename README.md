@@ -44,15 +44,13 @@ http://127.0.0.1:8080/index.html
 
 ### Opción C: Go Live de VS Code
 
-Abre `index.html` y pulsa **Go Live**. El proyecto incluye `.vscode/settings.json` con el puerto `8080` para evitar el conflicto con el puerto `5500`.
+Abre `index.html` y pulsa **Go Live**. Si Live Server intenta usar el puerto `5500` y ese puerto está ocupado, cambia el puerto en la configuración de Live Server a `8080`, o usa la Opción B.
 
-Abre:
+Abre la URL que muestre Live Server, por ejemplo:
 
 ```text
 http://127.0.0.1:8080/
 ```
-
-Si Live Server sigue intentando usar el puerto `5500`, reinicia VS Code o cambia el puerto en la configuración de Live Server a `8080`.
 
 El navegador carga automáticamente:
 
@@ -108,7 +106,7 @@ ProyectoFinalSeries/
 └── README.md
 ```
 
-Las carpetas `app/` y `engine/` del Dash anterior ya no forman parte de la estructura actual. El archivo `.vscode/settings.json` es configuración local ignorada por Git y fija Live Server en el puerto `8080`.
+Las carpetas `app/` y `engine/` del Dash anterior ya no forman parte de la estructura actual.
 
 ### ¿Qué hace `tools/`?
 
@@ -136,7 +134,6 @@ La interfaz no necesita `data/`. Si ejecutas el runner y el archivo crudo no exi
 | `resultados_capitulo6/` | No | La pestaña SARIMA dejaría de cargar. |
 | `interface/` | No | Contiene los estilos, scripts y librerías que usa `index.html`. |
 | `index.html` | No | Es la entrada única de la interfaz. |
-| `.vscode/` | Sí | Solo contiene la configuración local de Live Server. |
 
 ---
 
