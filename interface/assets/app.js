@@ -816,7 +816,7 @@
     grid.innerHTML = CAP6.figuras.map((file) => {
       const cap = captions[file] || [file.replace(/^\d+_/, '').replace('.png', '').replace(/_/g, ' '), ''];
       return '<figure class="evidence-card">' +
-        '<img src="../resultados_capitulo6/figuras/' + encodeURIComponent(file) + '" alt="' + esc(cap[0]) + '" loading="lazy">' +
+        '<img src="resultados_capitulo6/figuras/' + encodeURIComponent(file) + '" alt="' + esc(cap[0]) + '" loading="lazy">' +
         '<figcaption class="caption">' + esc(cap[0]) + '<span>' + esc(cap[1]) + '</span></figcaption>' +
         '</figure>';
     }).join('');

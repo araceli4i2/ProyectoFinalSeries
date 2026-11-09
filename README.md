@@ -6,42 +6,61 @@ Documentación única del proyecto. La entrega final es una interfaz estática q
 
 ## 1. Cómo arrancar la interfaz
 
-La interfaz es **HTML estático**. No hay que compilar JavaScript, no se usa Node, `npm`, bundler ni servidor Python para visualizarla.
+La interfaz es **HTML estático**. El único punto de entrada es `index.html` en la raíz. No hay que compilar JavaScript ni usar Node o `npm`.
 
 ### Opción A: abrir directamente
 
-Abre en el navegador:
+Haz doble clic en:
 
 ```text
-interface/index.html
+index.html
 ```
 
-En Windows también puedes ejecutar desde la raíz:
+En Windows también puedes ejecutarlo desde la raíz:
 
 ```powershell
-start interface\index.html
+start index.html
 ```
 
-### Opción B: servidor local opcional
+### Opción B: servidor local en el puerto 8080
 
-Si el navegador bloquea la carga de archivos locales, inicia un servidor desde la raíz del proyecto:
+Desde la raíz del proyecto:
 
-```bash
-python -m http.server 8000
+```powershell
+python -m http.server 8080 --bind 127.0.0.1
 ```
 
 Luego abre:
 
 ```text
-http://127.0.0.1:8000/interface/
+http://127.0.0.1:8080/
 ```
+
+o directamente:
+
+```text
+http://127.0.0.1:8080/index.html
+```
+
+### Opción C: Go Live de VS Code
+
+Abre `index.html` y pulsa **Go Live**. El proyecto incluye `.vscode/settings.json` con el puerto `8080` para evitar el conflicto con el puerto `5500`.
+
+Abre:
+
+```text
+http://127.0.0.1:8080/
+```
+
+Si Live Server sigue intentando usar el puerto `5500`, reinicia VS Code o cambia el puerto en la configuración de Live Server a `8080`.
 
 El navegador carga automáticamente:
 
+- `interface/assets/style.css`
 - `interface/vendor/cytoscape.min.js`
 - `interface/vendor/plotly.min.js`
-- `../resultados_capitulo3/datos.js` como `window.CAP3`
-- `../resultados_capitulo6/datos.js` como `window.CAP6`
+- `resultados_capitulo3/datos.js` como `window.CAP3`
+- `resultados_capitulo6/datos.js` como `window.CAP6`
 - `interface/assets/app.js`, `flow_animation.js` y `kpi_animation.js`
 
 No se requiere ejecutar el runner para ver la interfaz: los resultados ya están generados.
@@ -52,8 +71,8 @@ No se requiere ejecutar el runner para ver la interfaz: los resultados ya están
 
 ```text
 ProyectoFinalSeries/
+├── index.html                     # Entrada única con cuatro pestañas
 ├── interface/
-│   ├── index.html                 # Interfaz única con cuatro pestañas
 │   ├── assets/
 │   │   ├── style.css              # Tema visual y responsive
 │   │   ├── app.js                 # Render de datos, tablas, Plotly y Cytoscape
@@ -81,9 +100,6 @@ ProyectoFinalSeries/
 │       ├── run_capitulo3.py       # Regenera los resultados del Capítulo 3
 │       ├── README.md              # Instrucciones del runner
 │       └── requirements.txt       # Dependencias del runner
-├── data/
-│   ├── raw/                       # Archivo .json.gz local (ignorado por Git)
-│   └── processed/                 # Carpeta legada, actualmente vacía
 ├── notebooks/
 │   ├── DAT262_Capitulo3_Markov_PageRank_GitHub (1).ipynb
 │   ├── DAT262_Capitulo6_SARIMA_Final (1).ipynb
@@ -92,7 +108,7 @@ ProyectoFinalSeries/
 └── README.md
 ```
 
-Las carpetas `app/` y `engine/` del Dash anterior ya no forman parte de la estructura actual.
+Las carpetas `app/` y `engine/` del Dash anterior ya no forman parte de la estructura actual. El archivo `.vscode/settings.json` es configuración local ignorada por Git y fija Live Server en el puerto `8080`.
 
 ### ¿Qué hace `tools/`?
 
@@ -101,23 +117,26 @@ Contiene únicamente el runner reproducible del Capítulo 3 y su documentación.
 - Consérvala si quieres poder regenerar los resultados.
 - Puedes borrarla si solo entregarás los resultados ya generados y la interfaz estática.
 
-### ¿Qué hace `data/`?
+### ¿Qué pasó con `data/`?
 
-- `data/raw/`: guarda el archivo crudo de GH Archive usado por el runner (`2026-03-10-12.json.gz`). Está ignorado por Git y el runner puede descargarlo de nuevo si falta.
-- `data/processed/`: carpeta del flujo Dash anterior. Está vacía y no la usa la interfaz.
+`data/` ya no forma parte de la entrega actual. Era solo la entrada local del runner:
 
-Puedes borrar `data/` completa sin afectar la interfaz. Si conservas `tools/`, el runner volverá a descargar el archivo crudo cuando sea necesario.
+- `data/raw/`: guardaba el archivo crudo de GH Archive (`2026-03-10-12.json.gz`). Estaba ignorado por Git.
+- `data/processed/`: carpeta del flujo Dash anterior, vacía y sin uso.
+
+La interfaz no necesita `data/`. Si ejecutas el runner y el archivo crudo no existe, lo descarga y recrea `data/raw/` automáticamente.
 
 ### ¿Qué se puede borrar sin romper la entrega?
 
 | Ruta | ¿Se puede borrar? | Efecto |
 | :--- | :--- | :--- |
-| `data/` | Sí | La interfaz sigue funcionando; el runner descarga de nuevo el archivo crudo. |
 | `tools/` | Sí, si no vas a regenerar resultados | La interfaz sigue funcionando; pierdes la reproducibilidad del Capítulo 3. |
 | `notebooks/` | Sí, si solo entregas la interfaz | Pierdes la referencia metodológica y el informe. |
 | `resultados_capitulo3/` | No | La pestaña de Markov y PageRank dejaría de cargar. |
 | `resultados_capitulo6/` | No | La pestaña SARIMA dejaría de cargar. |
-| `interface/` | No | Es la entrega final. |
+| `interface/` | No | Contiene los estilos, scripts y librerías que usa `index.html`. |
+| `index.html` | No | Es la entrada única de la interfaz. |
+| `.vscode/` | Sí | Solo contiene la configuración local de Live Server. |
 
 ---
 
@@ -125,7 +144,7 @@ Puedes borrar `data/` completa sin afectar la interfaz. Si conservas `tools/`, e
 
 El Capítulo 3 se calcula a partir de **una hora** de GH Archive:
 
-- Archivo: `2026-03-10-12.json.gz`
+- Archivo: `2026-03-10-12.json.gz` (si no existe localmente, el runner lo descarga)
 - Fecha: 10 de marzo de 2026, 12:00 UTC
 - Tamaño: 27,781,082 bytes
 - SHA-256: `78b352e8568a7c56dd6de2ec17e1102750f4cbca017f3f14d3591f190e4cad5e`
@@ -143,7 +162,7 @@ El Capítulo 3 se calcula a partir de **una hora** de GH Archive:
 
 ### Cómo regenerarlo
 
-Si borraste `tools/` o `data/`, primero recupera las dependencias del runner:
+Si borraste `tools/` o necesitas reinstalar dependencias, ejecuta:
 
 ```bash
 python -m pip install -r tools/capitulo3/requirements.txt
