@@ -7,8 +7,8 @@
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
 
   const PCFG = { responsive: true, displayModeBar: false, displaylogo: false };
-  const TABS = ['overview', 'markov', 'pagerank', 'sarima'];
-  const state = { overview: false, markov: false, pagerank: false, sarima: false };
+  const TABS = ['overview', 'exploracion', 'markov', 'pagerank', 'sarima', 'sarima-validacion'];
+  const state = { overview: false, exploracion: false, markov: false, pagerank: false, sarima: false, 'sarima-validacion': false };
   let cyInstance = null;
   let currentTopN = 50;
   let markovFocus = 'PushEvent';
@@ -98,9 +98,11 @@
     if (state[name]) return;
     state[name] = true;
     if (name === 'overview') initOverview();
+    if (name === 'exploracion') initExploration();
     if (name === 'markov') initMarkov();
     if (name === 'pagerank') initPagerank();
     if (name === 'sarima') initSarima();
+    if (name === 'sarima-validacion') initSarimaValidation();
   }
 
   // ---------------------------------------------------------------------
@@ -109,7 +111,6 @@
   function initOverview() {
     const e = CAP3.exploracion;
     const m = CAP3.muestra;
-    const piPush = CAP3.markov.distribucion_estacionaria.find((d) => d.tipo === 'PushEvent');
     const topRepo = CAP3.pagerank.top15[0];
     const metricas = CAP6.metricas;
 
@@ -121,6 +122,55 @@
       { label: 'Con organización', value: fmtInt(m.n_org), sub: fmtPct(e.porcentaje_org, 2) + ' del total', accent: 'cyan' },
       { label: 'Cuenta personal', value: fmtInt(m.n_personal), sub: fmtPct(e.porcentaje_personal, 2) + ' del total', accent: 'pink' },
     ]);
+
+    document.getElementById('ov-validation-value').innerHTML = CAP3.validacion.todo_coincide
+      ? '<span class="badge green">Validado contra notebooks</span>'
+      : '<span class="badge orange">Revisar diferencias</span>';
+
+    document.getElementById('ov-findings').innerHTML = [
+      {
+        badge: 'Markov',
+        badgeClass: 'green',
+        title: 'El push domina la conversación',
+        text: 'El 84.52 % de las transiciones que salen de PushEvent vuelven a PushEvent. La distribución estacionaria le asigna el 80.28 % del tiempo de largo plazo.',
+        value: 'P(Push → Push) = 0.8452',
+      },
+      {
+        badge: 'PageRank',
+        badgeClass: 'purple',
+        title: 'La centralidad es de tránsito',
+        text: 'El grafo completo tiene 36,281 repositorios y 41,902 aristas. El Top 1 concentra el mayor flujo secuencial de la hora, no necesariamente la mayor popularidad global.',
+        value: topRepo.repo,
+      },
+      {
+        badge: 'SARIMA',
+        badgeClass: 'blue',
+        title: 'El modelo captura la forma, no la ventaja',
+        text: 'SARIMA obtiene AIC = −544.92 y residuos compatibles con ruido blanco, pero su MASE de 1.383 no supera al naive estacional en este holdout. La lectura crítica queda visible.',
+        value: 'MASE = ' + fmtFixed(metricas.MASE, 3),
+      },
+    ].map((f) => (
+      '<article class="card"><div class="card-body">' +
+      '<span class="badge ' + f.badgeClass + '">' + esc(f.badge) + '</span>' +
+      '<h3 style="font-size:16px;line-height:1.25;margin:12px 0 8px;letter-spacing:-.02em">' + esc(f.title) + '</h3>' +
+      '<p style="color:#8ca0bb;font-size:12px">' + esc(f.text) + '</p>' +
+      '<div class="mono" style="margin-top:12px;color:#79c0ff;font-size:11px;overflow-wrap:anywhere">' + esc(f.value) + '</div>' +
+      '</div></article>'
+    )).join('');
+
+    const ok = CAP3.validacion.todo_coincide;
+    const validation = document.getElementById('ov-validation');
+    validation.className = 'callout ' + (ok ? 'green' : 'orange');
+    validation.innerHTML = ok
+      ? '<strong>Validación reproducida.</strong> Las métricas de Markov y PageRank coinciden con los valores de referencia de los notebooks: 161,817 eventos, P(Push → Push) = 0.845218 y el mismo Top 5 de PageRank. Los resultados se generaron desde el archivo crudo de GH Archive.'
+      : '<strong>Hay diferencias frente a los notebooks.</strong> Revisa <code>resultados_capitulo3/resumen.txt</code> para ver el detalle de la validación.';
+  }
+
+  // ---------------------------------------------------------------------
+  // EXPLORACION CAP 3
+  // ---------------------------------------------------------------------
+  function initExploration() {
+    const e = CAP3.exploracion;
 
     const minutos = e.eventos_por_minuto;
     plot('ov-minute', [{
@@ -185,48 +235,6 @@
       }],
       legend: { orientation: 'h', x: 0.5, xanchor: 'center', y: -0.02, font: { size: 10 } },
     });
-
-    document.getElementById('ov-validation-value').innerHTML = CAP3.validacion.todo_coincide
-      ? '<span class="badge green">Validado contra notebooks</span>'
-      : '<span class="badge orange">Revisar diferencias</span>';
-
-    document.getElementById('ov-findings').innerHTML = [
-      {
-        badge: 'Markov',
-        badgeClass: 'green',
-        title: 'El push domina la conversación',
-        text: 'El 84.52 % de las transiciones que salen de PushEvent vuelven a PushEvent. La distribución estacionaria le asigna el 80.28 % del tiempo de largo plazo.',
-        value: 'P(Push → Push) = 0.8452',
-      },
-      {
-        badge: 'PageRank',
-        badgeClass: 'purple',
-        title: 'La centralidad es de tránsito',
-        text: 'El grafo completo tiene 36,281 repositorios y 41,902 aristas. El Top 1 concentra el mayor flujo secuencial de la hora, no necesariamente la mayor popularidad global.',
-        value: topRepo.repo,
-      },
-      {
-        badge: 'SARIMA',
-        badgeClass: 'blue',
-        title: 'El modelo captura la forma, no la ventaja',
-        text: 'SARIMA obtiene AIC = −544.92 y residuos compatibles con ruido blanco, pero su MASE de 1.383 no supera al naive estacional en este holdout. La lectura crítica queda visible.',
-        value: 'MASE = ' + fmtFixed(metricas.MASE, 3),
-      },
-    ].map((f) => (
-      '<article class="card"><div class="card-body">' +
-      '<span class="badge ' + f.badgeClass + '">' + esc(f.badge) + '</span>' +
-      '<h3 style="font-size:16px;line-height:1.25;margin:12px 0 8px;letter-spacing:-.02em">' + esc(f.title) + '</h3>' +
-      '<p style="color:#8ca0bb;font-size:12px">' + esc(f.text) + '</p>' +
-      '<div class="mono" style="margin-top:12px;color:#79c0ff;font-size:11px;overflow-wrap:anywhere">' + esc(f.value) + '</div>' +
-      '</div></article>'
-    )).join('');
-
-    const ok = CAP3.validacion.todo_coincide;
-    const validation = document.getElementById('ov-validation');
-    validation.className = 'callout ' + (ok ? 'green' : 'orange');
-    validation.innerHTML = ok
-      ? '<strong>Validación reproducida.</strong> Las métricas de Markov y PageRank coinciden con los valores de referencia de los notebooks: 161,817 eventos, P(Push → Push) = 0.845218 y el mismo Top 5 de PageRank. Los resultados se generaron desde el archivo crudo de GH Archive.'
-      : '<strong>Hay diferencias frente a los notebooks.</strong> Revisa <code>resultados_capitulo3/resumen.txt</code> para ver el detalle de la validación.';
   }
 
   // ---------------------------------------------------------------------
@@ -764,6 +772,12 @@
       ? 'Los contrastes de Ljung–Box no rechazan la hipótesis de ruido blanco en los residuos. Jarque–Bera sí rechaza normalidad y la cobertura del intervalo al 95 % es menor a la nominal; ambas limitaciones se reportan sin ocultarlas.'
       : 'Los residuos no pasan todos los contrastes de ruido blanco. Revisa la tabla de diagnóstico y las figuras de residuos antes de usar el pronóstico.';
 
+  }
+
+  // ---------------------------------------------------------------------
+  // SARIMA VALIDACION
+  // ---------------------------------------------------------------------
+  function initSarimaValidation() {
     const comp = CAP6.comparacion;
     const modelNames = Object.keys(comp);
     const metrics = ['MAE', 'RMSE', 'MAPE', 'MASE'];
@@ -816,7 +830,7 @@
     grid.innerHTML = CAP6.figuras.map((file) => {
       const cap = captions[file] || [file.replace(/^\d+_/, '').replace('.png', '').replace(/_/g, ' '), ''];
       return '<figure class="evidence-card">' +
-        '<img src="resultados_capitulo6/figuras/' + encodeURIComponent(file) + '" alt="' + esc(cap[0]) + '" loading="lazy">' +
+        '<img src="resultados_capitulo6/figuras/' + encodeURIComponent(file) + '" alt="' + esc(cap[0]) + '" decoding="async">' +
         '<figcaption class="caption">' + esc(cap[0]) + '<span>' + esc(cap[1]) + '</span></figcaption>' +
         '</figure>';
     }).join('');

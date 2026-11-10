@@ -20,9 +20,11 @@
     </a>
     <nav class="tabs" id="main-nav" aria-label="Secciones del proyecto">
       <button class="tab-btn active" data-tab="overview" type="button">Overview</button>
-      <button class="tab-btn" data-tab="markov" type="button">Capítulo 3 · Markov</button>
-      <button class="tab-btn" data-tab="pagerank" type="button">Capítulo 3 · PageRank</button>
-      <button class="tab-btn" data-tab="sarima" type="button">Capítulo 6 · SARIMA</button>
+      <button class="tab-btn" data-tab="exploracion" type="button">Cap. 3 — Exploración</button>
+      <button class="tab-btn" data-tab="markov" type="button">Cap. 3 — Markov</button>
+      <button class="tab-btn" data-tab="pagerank" type="button">Cap. 3 — PageRank</button>
+      <button class="tab-btn" data-tab="sarima" type="button">Cap. 6 — SARIMA</button>
+      <button class="tab-btn" data-tab="sarima-validacion" type="button">Cap. 6 — Validación</button>
     </nav>
     <div class="topbar-status"><span class="pulse"></span><span id="topbar-status-text">Resultados precalculados</span></div>
   </header>
@@ -47,6 +49,69 @@
       </div>
 
       <div id="ov-kpis" class="kpi-grid"></div>
+      <p class="chart-note">Los indicadores resumen la hora micro. El detalle de la serie macro y su validación se reparte entre las dos páginas del Capítulo 6.</p>
+
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Dos escalas, una misma fuente</div>
+            <div class="card-subtitle">Del evento individual al patrón semanal.</div>
+          </div>
+          <span class="badge orange">Diseño</span>
+        </div>
+        <div class="card-body">
+          <div class="fact-list">
+            <div class="fact">
+              <div class="fact-label">Micro · ventana</div>
+              <div class="fact-value mono">2026-03-10 · 12:00 UTC</div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">Micro · unidad</div>
+              <div class="fact-value">Evento público individual</div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">Macro · ventana</div>
+              <div class="fact-value mono">168 horas continuas</div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">Macro · unidad</div>
+              <div class="fact-value">Conteo horario global</div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">Validación</div>
+              <div class="fact-value" id="ov-validation-value">—</div>
+            </div>
+          </div>
+          <p class="chart-note">El overview resume la comparación entre escalas. La exploración, Markov y PageRank viven en las tres páginas del Capítulo 3; el pronóstico y su validación ocupan las dos páginas del Capítulo 6.</p>
+        </div>
+      </article>
+
+      <div class="reading-note blue"><strong>Dos preguntas, una fuente.</strong> La hora micro permite estimar transiciones y centralidad; la serie macro permite separar tendencia, estacionalidad diaria y ruido. Los hallazgos siguientes resumen esa conexión antes de entrar en cada capítulo.</div>
+
+      <div class="section-head">
+        <div>
+          <h2>Hallazgos que conectan las dos escalas</h2>
+          <p>Tres lecturas rápidas para entrar al detalle de cada capítulo.</p>
+        </div>
+      </div>
+      <div id="ov-findings" class="grid-3"></div>
+
+      <div id="ov-validation" class="callout green" style="margin-top: 18px;"></div>
+    </section>
+
+    <!-- ============================ CAP 3 EXPLORACION ============================ -->
+    <section id="tab-exploracion" class="tab-panel" aria-labelledby="ex-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Capítulo 3 — Escala micro</div>
+          <h2 id="ex-title">Exploración de la hora</h2>
+          <p>Una hora de GH Archive (10 de marzo de 2026, 12:00 UTC) para medir volumen, ritmo y composición antes de modelar transiciones.</p>
+        </div>
+        <div class="head-badges">
+          <span class="badge green">161,817 eventos</span>
+          <span class="badge blue">16 estados</span>
+        </div>
+      </div>
 
       <div class="grid-main">
         <article class="card">
@@ -72,6 +137,8 @@
         </article>
       </div>
 
+      <div class="reading-note"><strong>Lectura del ritmo.</strong> La actividad por minuto no es uniforme: hay picos de creación de ramas y minutos dominados por pushes. La mezcla de eventos confirma que PushEvent concentra buena parte del volumen, mientras que los eventos menos frecuentes explican la diversidad de estados de la cadena.</div>
+
       <div class="grid-2">
         <article class="card">
           <div class="card-header">
@@ -87,47 +154,16 @@
         <article class="card">
           <div class="card-header">
             <div>
-              <div class="card-title">Dos escalas, una misma fuente</div>
-              <div class="card-subtitle">Del evento individual al patrón semanal.</div>
+              <div class="card-title">De la exploración a la cadena</div>
+              <div class="card-subtitle">Los tipos de evento serán los 16 estados de Markov.</div>
             </div>
-            <span class="badge orange">Diseño</span>
+            <span class="badge blue">Siguiente</span>
           </div>
           <div class="card-body">
-            <div class="fact-list">
-              <div class="fact">
-                <div class="fact-label">Micro · ventana</div>
-                <div class="fact-value mono">2026-03-10 · 12:00 UTC</div>
-              </div>
-              <div class="fact">
-                <div class="fact-label">Micro · unidad</div>
-                <div class="fact-value">Evento público individual</div>
-              </div>
-              <div class="fact">
-                <div class="fact-label">Macro · ventana</div>
-                <div class="fact-value mono">168 horas continuas</div>
-              </div>
-              <div class="fact">
-                <div class="fact-label">Macro · unidad</div>
-                <div class="fact-value">Conteo horario global</div>
-              </div>
-              <div class="fact">
-                <div class="fact-label">Validación</div>
-                <div class="fact-value" id="ov-validation-value">—</div>
-              </div>
-            </div>
+            <p class="chart-note">La frecuencia de cada tipo de evento define el vocabulario de estados. La secuencia temporal de esos estados alimenta la matriz de transición; los repositorios consecutivos de cada usuario alimentan el grafo de PageRank.</p>
           </div>
         </article>
       </div>
-
-      <div class="section-head">
-        <div>
-          <h2>Hallazgos que conectan las dos escalas</h2>
-          <p>Tres lecturas rápidas para entrar al detalle de cada capítulo.</p>
-        </div>
-      </div>
-      <div id="ov-findings" class="grid-3"></div>
-
-      <div id="ov-validation" class="callout green" style="margin-top: 18px;"></div>
     </section>
 
     <!-- ============================ MARKOV ============================ -->
@@ -145,6 +181,7 @@
       </div>
 
       <div id="mk-kpis" class="kpi-grid"></div>
+      <p class="chart-note">Cada fila de la matriz es un estado de origen y cada columna un estado de destino. La diagonal mide persistencia; fuera de ella aparecen los cambios de tipo de evento.</p>
 
       <div class="grid-main">
         <article class="card">
@@ -155,7 +192,10 @@
             </div>
             <span class="badge green">Empírica</span>
           </div>
-          <div class="card-body tight"><div id="mk-heatmap" class="chart heatmap"></div></div>
+          <div class="card-body tight">
+            <div id="mk-heatmap" class="chart heatmap"></div>
+            <p class="chart-note">Las filas con una celda dominante son transiciones muy predecibles; las filas repartidas muestran estados que se disuelven en varios destinos. La escala de color es logarítmica para que los valores pequeños sigan siendo visibles.</p>
+          </div>
         </article>
 
         <article class="card">
@@ -170,9 +210,12 @@
             <div id="mk-pi-chart" class="chart tall"></div>
             <div id="mk-detail" class="detail-panel"></div>
             <div id="mk-state-list" class="chips"></div>
+            <p class="chart-note">La distribución estacionaria no describe la hora observada, sino el equilibrio de largo plazo de la cadena. Si el proceso se repitiera indefinidamente, estas serían las proporciones esperadas de cada estado.</p>
           </div>
         </article>
       </div>
+
+      <div class="reading-note"><strong>Del mapa a los pares concretos.</strong> La tabla siguiente ordena las transiciones con mayor probabilidad condicional. Las propiedades de la cadena indican si ese equilibrio es único y si la matriz se comporta como una cadena regular.</div>
 
       <div class="grid-2">
         <article class="card">
@@ -208,6 +251,8 @@
         </article>
       </div>
 
+      <div class="reading-note blue"><strong>Cierre visual del capítulo.</strong> Las dos figuras siguientes son la versión estática de lo que acabas de explorar: la matriz completa y el vector estacionario que resume el largo plazo.</div>
+
       <div class="section-head">
         <div>
           <h2>Evidencia visual · Markov</h2>
@@ -216,11 +261,11 @@
       </div>
       <div class="evidence-grid">
         <figure class="evidence-card">
-          <img src="resultados_capitulo3/figuras/04_matriz_transicion.png" alt="Mapa de calor de la matriz de transición P" loading="lazy">
+          <img src="resultados_capitulo3/figuras/04_matriz_transicion.png" alt="Mapa de calor de la matriz de transición P">
           <figcaption class="caption">Matriz de transición P<span>Mapa de calor 16 × 16</span></figcaption>
         </figure>
         <figure class="evidence-card">
-          <img src="resultados_capitulo3/figuras/05_distribucion_estacionaria.png" alt="Gráfico de distribución estacionaria pi" loading="lazy">
+          <img src="resultados_capitulo3/figuras/05_distribucion_estacionaria.png" alt="Gráfico de distribución estacionaria pi">
           <figcaption class="caption">Distribución estacionaria π<span>Probabilidad de largo plazo por estado</span></figcaption>
         </figure>
       </div>
@@ -241,6 +286,7 @@
       </div>
 
       <div id="pr-kpis" class="kpi-grid"></div>
+      <p class="chart-note">PageRank se calcula sobre el grafo de transiciones entre repositorios, no sobre estrellas ni forks. Un nodo gana centralidad cuando recibe tránsito de otros nodos relevantes, aunque su actividad propia no sea la más alta.</p>
 
       <article class="card">
         <div class="card-header">
@@ -310,6 +356,7 @@
               </div>
             </aside>
           </div>
+          <div class="reading-note"><strong>Qué muestra la animación.</strong> El grafo visible es un subgrafo Top 50: los nodos se dimensionan por score y las aristas se orientan según la secuencia real. La animación no inventa flujos; reproduce transiciones observadas dentro de la misma hora.</div>
         </div>
       </article>
 
@@ -363,9 +410,10 @@
           <p>El Top 15 también queda disponible como figura estática para el informe.</p>
         </div>
       </div>
+      <div class="reading-note blue"><strong>Lectura del ranking.</strong> La figura estática del Top 15 sirve como cierre del capítulo: coincide con la tabla interactiva y permite comparar el ranking sin depender del navegador.</div>
       <div class="evidence-grid">
         <figure class="evidence-card">
-          <img src="resultados_capitulo3/figuras/06_pagerank_top15.png" alt="Gráfico de barras del Top 15 por PageRank" loading="lazy">
+          <img src="resultados_capitulo3/figuras/06_pagerank_top15.png" alt="Gráfico de barras del Top 15 por PageRank">
           <figcaption class="caption">Top 15 por PageRank<span>α = 0.85, pesos por transición</span></figcaption>
         </figure>
       </div>
@@ -376,7 +424,7 @@
       <div class="section-head">
         <div>
           <div class="eyebrow">Capítulo 6 · Escala macro</div>
-          <h2 id="sa-title">SARIMA para la serie horaria global</h2>
+          <h2 id="sa-title">Serie horaria y pronóstico SARIMA</h2>
           <p>168 horas continuas de actividad global de GitHub y un modelo SARIMA(1,1,1)(0,1,1)<sub>24</sub> con deriva para pronosticar las últimas 24 horas.</p>
         </div>
         <div class="head-badges">
@@ -387,6 +435,8 @@
 
       <div id="sa-kpis" class="kpi-grid"></div>
 
+      <div class="reading-note blue"><strong>Alcance de esta página.</strong> Primero se revisa la serie horaria y el pronóstico a 24 horas; después se comprueba si el modelo cumple los supuestos de Box-Jenkins.</div>
+
       <article class="card">
         <div class="card-header">
           <div>
@@ -395,7 +445,10 @@
           </div>
           <span class="badge purple">Plotly interactivo</span>
         </div>
-        <div class="card-body tight"><div id="sa-forecast" class="chart tall" style="min-height: 500px;"></div></div>
+        <div class="card-body tight">
+          <div id="sa-forecast" class="chart tall" style="min-height: 500px;"></div>
+          <p class="chart-note">El gráfico superpone la serie observada, el pronóstico SARIMA y dos referencias. La banda al 95 % mide incertidumbre; si el naive estacional queda dentro de la banda, el modelo no aporta una ventaja clara en esa hora.</p>
+        </div>
       </article>
 
       <div class="grid-main even" style="margin-top: 20px;">
@@ -436,6 +489,25 @@
           </div>
         </article>
       </div>
+
+      <div class="reading-note"><strong>El diagnóstico manda.</strong> El modelo final se elige por AIC, pero la validación pesa igual: residuos sin autocorrelación, normalidad aproximada y cobertura razonable de los intervalos. Un AIC bajo con residuos estructurados no sería un buen modelo.</div>
+    </section>
+
+    <!-- ============================ SARIMA VALIDACION ============================ -->
+    <section id="tab-sarima-validacion" class="tab-panel" aria-labelledby="sa2-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Capítulo 6 · Escala macro</div>
+          <h2 id="sa2-title">Validación y evidencia del SARIMA</h2>
+          <p>Comparación contra alternativas, justificación de las diferenciaciones y las siete figuras del capítulo.</p>
+        </div>
+        <div class="head-badges">
+          <span class="badge blue">Holdout 24 h</span>
+          <span class="badge orange">Diagnóstico</span>
+        </div>
+      </div>
+
+      <div class="reading-note blue"><strong>Cómo se compara.</strong> El holdout son las últimas 24 horas. MAE y RMSE penalizan errores absolutos; MAPE los expresa en porcentaje y MASE los escala contra el naive estacional, que es la referencia mínima a superar.</div>
 
       <div class="grid-main even">
         <article class="card">
@@ -481,6 +553,8 @@
         </article>
       </div>
 
+      <div class="reading-note purple"><strong>Por qué se diferencia la serie.</strong> La fuerza estacional y las pruebas ADF/KPSS justifican el orden (1,1,1)(0,1,1)₂₄. Sin esa justificación, el modelo sería solo un ajuste numérico.</div>
+
       <div id="sa-critical" class="callout" style="margin: 18px 0 24px;"></div>
 
       <div class="section-head">
@@ -489,6 +563,7 @@
           <p>Siete figuras del capítulo: serie, perfil horario, STL, diferenciaciones, ACF/PACF, residuos y pronóstico.</p>
         </div>
       </div>
+      <div class="reading-note purple"><strong>Recorrido de las siete figuras.</strong> La serie original, el perfil horario, la descomposición STL, las diferenciaciones, la ACF/PACF, los residuos y el pronóstico responden preguntas distintas del mismo diagnóstico. Lee cada figura como una pieza del argumento, no como un resultado aislado.</div>
       <div class="evidence-grid" id="sa-evidence"></div>
     </section>
   </main>
